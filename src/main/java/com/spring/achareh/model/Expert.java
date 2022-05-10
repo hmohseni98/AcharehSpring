@@ -28,11 +28,11 @@ public class Expert extends Person {
     private byte[] image;
     @ManyToMany
     @JoinTable(
-            name = "expert_service",
+            name = "expert_speciality",
             joinColumns = { @JoinColumn(name = "expert_id") },
-            inverseJoinColumns = { @JoinColumn(name = "service_id") }
+            inverseJoinColumns = { @JoinColumn(name = "speciality_id") }
     )
-    private Set<Service> services;
+    private Set<Speciality> specialities;
     @Column(name = "balance" , columnDefinition = "int default 0")
     private Integer balance;
 
@@ -42,12 +42,12 @@ public class Expert extends Person {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Expert expert = (Expert) o;
-        return status == expert.status && Arrays.equals(image, expert.image) && Objects.equals(services, expert.services) && Objects.equals(balance, expert.balance);
+        return status == expert.status && Arrays.equals(image, expert.image) && Objects.equals(specialities, expert.specialities) && Objects.equals(balance, expert.balance);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(super.hashCode(), status, services, balance);
+        int result = Objects.hash(super.hashCode(), status, specialities, balance);
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }

@@ -29,8 +29,8 @@ public class Order extends BaseEntity<Integer> {
     @JoinColumn(name = "customer_id")
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "service_id")
-    private Service service;
+    @JoinColumn(name = "speciality_id")
+    private Speciality speciality;
     @ManyToOne
     @JoinColumn(name = "accept_order_id")
     private Expert acceptOrder;
@@ -56,11 +56,11 @@ public class Order extends BaseEntity<Integer> {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Order order = (Order) o;
-        return Objects.equals(customer, order.customer) && Objects.equals(service, order.service) && Objects.equals(acceptOrder, order.acceptOrder) && Objects.equals(description, order.description) && Objects.equals(suggestionPrice, order.suggestionPrice) && Objects.equals(submitDateTime, order.submitDateTime) && Objects.equals(workDateTime, order.workDateTime) && Objects.equals(address, order.address) && status == order.status;
+        return Objects.equals(customer, order.customer) && Objects.equals(speciality, order.speciality) && Objects.equals(acceptOrder, order.acceptOrder) && Objects.equals(description, order.description) && Objects.equals(suggestionPrice, order.suggestionPrice) && Objects.equals(submitDateTime, order.submitDateTime) && Objects.equals(workDateTime, order.workDateTime) && Objects.equals(address, order.address) && status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, service, acceptOrder, description, suggestionPrice, submitDateTime, workDateTime, address, status);
+        return Objects.hash(super.hashCode(), customer, speciality, acceptOrder, description, suggestionPrice, submitDateTime, workDateTime, address, status);
     }
 }

@@ -18,7 +18,7 @@ import java.util.Objects;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @ToString
 @Entity
-public class Service extends BaseEntity<Integer> {
+public class Speciality extends BaseEntity<Integer> {
     @Column(unique = true, columnDefinition = "varchar(100)")
     private String name;
     @Column(columnDefinition = "varchar(1000)")
@@ -33,8 +33,8 @@ public class Service extends BaseEntity<Integer> {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Service service = (Service) o;
-        return Objects.equals(name, service.name) && Objects.equals(description, service.description) && Objects.equals(basePrice, service.basePrice) && Objects.equals(category, service.category);
+        Speciality speciality = (Speciality) o;
+        return Objects.equals(name, speciality.name) && Objects.equals(description, speciality.description) && Objects.equals(basePrice, speciality.basePrice) && Objects.equals(category, speciality.category);
     }
 
     @Override
