@@ -22,7 +22,7 @@ import java.util.Set;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-public class Expert extends Person {
+public class Expert extends User {
     @Enumerated(EnumType.STRING)
     private AccountStatus status;
     private byte[] image;

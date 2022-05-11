@@ -17,7 +17,7 @@ import javax.persistence.Entity;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-public class Admin extends Person {
+public class Admin extends User {
 
 
     @Override

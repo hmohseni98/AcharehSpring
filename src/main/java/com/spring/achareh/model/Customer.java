@@ -21,7 +21,7 @@ import java.util.Objects;
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
-public class Customer extends Person {
+public class Customer extends User {
     @Column(name = "balance", columnDefinition = "int default 0")
     private Integer balance;
 
