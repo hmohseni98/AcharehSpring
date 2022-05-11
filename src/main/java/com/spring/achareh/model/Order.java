@@ -12,6 +12,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -33,7 +34,7 @@ public class Order extends BaseEntity<Integer> {
     private Speciality speciality;
     @ManyToOne
     @JoinColumn(name = "accept_offer_id")
-    private Offer acceptOrder;
+    private Offer acceptOffer;
     @Column(columnDefinition = "varchar(250)")
     private String description;
     @Column(name = "suggestion_price", columnDefinition = "int")
@@ -41,9 +42,8 @@ public class Order extends BaseEntity<Integer> {
     @CreationTimestamp
     @Column(name = "submit_date_time")
     private LocalDateTime submitDateTime;
-    @CreationTimestamp
-    @Column(name = "work_date_time")
-    private LocalDateTime workDateTime;
+    @Column(name = "work_date")
+    private LocalDate workDate;
     @Column(name = "address", columnDefinition = "varchar(250)")
     private String address;
     @Enumerated(EnumType.STRING)
@@ -56,11 +56,11 @@ public class Order extends BaseEntity<Integer> {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Order order = (Order) o;
-        return Objects.equals(customer, order.customer) && Objects.equals(speciality, order.speciality) && Objects.equals(acceptOrder, order.acceptOrder) && Objects.equals(description, order.description) && Objects.equals(suggestionPrice, order.suggestionPrice) && Objects.equals(submitDateTime, order.submitDateTime) && Objects.equals(workDateTime, order.workDateTime) && Objects.equals(address, order.address) && status == order.status;
+        return Objects.equals(customer, order.customer) && Objects.equals(speciality, order.speciality) && Objects.equals(acceptOffer, order.acceptOffer) && Objects.equals(description, order.description) && Objects.equals(suggestionPrice, order.suggestionPrice) && Objects.equals(submitDateTime, order.submitDateTime) && Objects.equals(workDate, order.workDate) && Objects.equals(address, order.address) && status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, speciality, acceptOrder, description, suggestionPrice, submitDateTime, workDateTime, address, status);
+        return Objects.hash(super.hashCode(), customer, speciality, acceptOffer, description, suggestionPrice, submitDateTime, workDate, address, status);
     }
 }

@@ -12,6 +12,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Objects;
 
 
@@ -37,11 +38,10 @@ public class Offer extends BaseEntity<Integer> {
     private LocalDateTime submitDateTime;
     @Column(name = "suggestion_price")
     private Integer suggestionPrice;
-    @Column(name = "duration_of_work")
+    @Column(name = "duration_of_work") // hour
     private Integer durationOfWork;
-    @CreationTimestamp
-    @Column(name = "start_work_date_time")
-    private LocalDateTime startWorkDateTime;
+    @Column(name = "start_work_time")
+    private LocalTime startWorkTime;
 
     @Override
     public boolean equals(Object o) {
@@ -49,11 +49,11 @@ public class Offer extends BaseEntity<Integer> {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Offer offer = (Offer) o;
-        return Objects.equals(expert, offer.expert) && Objects.equals(order, offer.order) && Objects.equals(submitDateTime, offer.submitDateTime) && Objects.equals(suggestionPrice, offer.suggestionPrice) && Objects.equals(durationOfWork, offer.durationOfWork) && Objects.equals(startWorkDateTime, offer.startWorkDateTime);
+        return Objects.equals(expert, offer.expert) && Objects.equals(order, offer.order) && Objects.equals(submitDateTime, offer.submitDateTime) && Objects.equals(suggestionPrice, offer.suggestionPrice) && Objects.equals(durationOfWork, offer.durationOfWork) && Objects.equals(startWorkTime, offer.startWorkTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), expert, order, submitDateTime, suggestionPrice, durationOfWork, startWorkDateTime);
+        return Objects.hash(super.hashCode(), expert, order, submitDateTime, suggestionPrice, durationOfWork, startWorkTime);
     }
 }
