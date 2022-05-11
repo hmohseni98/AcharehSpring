@@ -6,9 +6,9 @@ import com.spring.achareh.repository.OfferRepository;
 import com.spring.achareh.service.OfferService;
 import com.spring.achareh.service.base.BaseServiceImpl;
 import org.springframework.stereotype.Service;
-
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
+
 
 @Service
 public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepository>
@@ -17,13 +17,14 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
         super(repository);
     }
 
+
     @Override
     public List<Offer> findAllOfferByExpert(Expert expert) {
-        return null;
+        return repository.findAllOfferByExpert(expert);
     }
 
     @Override
-    public List<Offer> findAllOfferByDate(Date date) {
-        return null;
+    public List<Offer> findAllOfferByDate(LocalDate date) {
+        return repository.findAllOfferBySubmitDateTime(date);
     }
 }

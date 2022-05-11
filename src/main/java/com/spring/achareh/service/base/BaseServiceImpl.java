@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Optional;
 
 
 public abstract class BaseServiceImpl<S extends BaseEntity<ID>, ID extends Serializable,R extends JpaRepository<S,ID>>
@@ -25,21 +26,22 @@ public abstract class BaseServiceImpl<S extends BaseEntity<ID>, ID extends Seria
     @Transactional
     @Override
     public void delete(S s) {
+        repository.delete(s);
     }
 
     @Transactional
     @Override
     public void update(S s) {
-
+        repository.save(s);
     }
 
     @Override
-    public S findById(ID id) {
-        return null;
+    public Optional<S> findById(ID id) {
+        return repository.findById(id);
     }
 
     @Override
     public List<S> findAll() {
-        return null;
+        return repository.findAll();
     }
 }

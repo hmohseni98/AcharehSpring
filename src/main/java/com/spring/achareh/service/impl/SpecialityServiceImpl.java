@@ -18,6 +18,6 @@ public class SpecialityServiceImpl extends BaseServiceImpl<Speciality, Integer, 
 
     @Override
     public List<Speciality> findAllByCategory(Category category) {
-        return null;
+        return repository.findAllByCategory(category);
     }
 }

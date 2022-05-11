@@ -18,11 +18,11 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
 
     @Override
     public List<Expert> findAllByStatus(AccountStatus status) {
-        return null;
+        return repository.findAllByStatus(status);
     }
 
     @Override
     public List<Expert> findAllByCategory(String categoryName) {
-        return null;
+        return repository.findAllByCategory(categoryName);
     }
 }

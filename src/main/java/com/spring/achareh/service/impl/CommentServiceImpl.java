@@ -15,22 +15,24 @@ import java.util.List;
 @Service
 public class CommentServiceImpl extends BaseServiceImpl<Comment, Integer, CommentRepository>
         implements CommentService {
+
+
     public CommentServiceImpl(CommentRepository repository) {
         super(repository);
     }
 
     @Override
     public List<Comment> findAllByCustomer(Customer customer) {
-        return null;
+        return repository.findAllByCustomer(customer);
     }
 
     @Override
     public List<Comment> findAllByExpert(Expert expert) {
-        return null;
+        return repository.findAllByExpert(expert);
     }
 
     @Override
     public List<Comment> findAllByService(Speciality speciality) {
-        return null;
+        return repository.findAllBySpeciality(speciality);
     }
 }

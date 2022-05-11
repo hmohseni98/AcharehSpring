@@ -7,6 +7,8 @@ import com.spring.achareh.model.Order;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.OrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -15,9 +17,12 @@ import java.util.List;
 public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findAllyByCustomer(Customer customer);
 
-    List<Order> findAllByService(Speciality speciality);
+    List<Order> findAllBySpeciality(Speciality speciality);
 
-    List<Order> findAllByExpert(Expert expert);
+    @Query(value = "select * from orders " +
+            "inner join offer o on orders.id = o.order_id " +
+            "where o.expert_id = :expertId", nativeQuery = true)
+    List<Order> findAllByExpert(@Param("expertId") Integer expertId);
 
     List<Order> findAllByStatus(OrderStatus status);
 }

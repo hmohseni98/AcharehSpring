@@ -32,8 +32,8 @@ public class Order extends BaseEntity<Integer> {
     @JoinColumn(name = "speciality_id")
     private Speciality speciality;
     @ManyToOne
-    @JoinColumn(name = "accept_order_id")
-    private Expert acceptOrder;
+    @JoinColumn(name = "accept_offer_id")
+    private Offer acceptOrder;
     @Column(columnDefinition = "varchar(250)")
     private String description;
     @Column(name = "suggestion_price", columnDefinition = "int")

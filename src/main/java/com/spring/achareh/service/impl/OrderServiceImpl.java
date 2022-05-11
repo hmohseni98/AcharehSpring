@@ -18,21 +18,21 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
 
     @Override
     public List<Order> findAllyByCustomer(Customer customer) {
-        return null;
+        return repository.findAllyByCustomer(customer);
     }
 
     @Override
-    public List<Order> findAllByService(Speciality speciality) {
-        return null;
+    public List<Order> findAllBySpeciality(Speciality speciality) {
+        return repository.findAllBySpeciality(speciality);
     }
 
     @Override
-    public List<Order> findAllByExpert(Expert expert) {
-        return null;
+    public List<Order> findAllByExpert(Integer expertId) {
+        return repository.findAllByExpert(expertId);
     }
 
     @Override
     public List<Order> findAllByStatus(OrderStatus status) {
-        return null;
+        return repository.findAllByStatus(status);
     }
 }
