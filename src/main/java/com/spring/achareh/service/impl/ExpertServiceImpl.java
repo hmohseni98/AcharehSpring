@@ -23,6 +23,6 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
 
     @Override
     public List<Expert> findAllByCategory(String categoryName) {
-        return repository.findAllByCategory(categoryName);
+        return findAllByCategory(categoryName);
     }
 }

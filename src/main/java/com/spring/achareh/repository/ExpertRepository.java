@@ -12,8 +12,8 @@ import java.util.List;
 public interface ExpertRepository extends JpaRepository<Expert, Integer> {
     List<Expert> findAllByStatus(AccountStatus status);
 
-    @Query(value = "select * from expert " +
-            "inner join expert_speciality es on expert.id = es.expert_id " +
+    @Query(value = "select * from users " +
+            "inner join expert_speciality es on users.id = es.expert_id " +
             "inner join speciality s on s.id = es.speciality_id " +
             "inner join category c on c.id = s.category_id " +
             "where c.name = :categoryName",nativeQuery = true)
