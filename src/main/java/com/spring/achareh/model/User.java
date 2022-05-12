@@ -1,6 +1,7 @@
 package com.spring.achareh.model;
 
 import com.spring.achareh.model.base.BaseEntity;
+import com.spring.achareh.model.enumration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,8 @@ public abstract class User extends BaseEntity<Integer> {
     @CreationTimestamp
     @Column(name = "register_date_time")
     private LocalDateTime registerDataTime;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Override
     public boolean equals(Object o) {

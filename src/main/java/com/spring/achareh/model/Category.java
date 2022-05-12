@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
 import javax.persistence.*;
 import java.util.Objects;
 
@@ -18,8 +15,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_ONLY)
 @Entity
 public class Category extends BaseEntity<Integer> {
     @Column(columnDefinition = "varchar(50)")

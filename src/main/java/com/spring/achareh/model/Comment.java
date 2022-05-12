@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,8 +19,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @SuperBuilder(toBuilder = true)
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Table(name = "comment",
         uniqueConstraints = {@UniqueConstraint(columnNames = {"customer_id", "order_id"})})
 @Entity
@@ -37,6 +36,7 @@ public class Comment extends BaseEntity<Integer> {
     private Integer score;
     @Column(name = "description", columnDefinition = "varchar(255)")
     private String description;
+    @CreationTimestamp
     @Column(name = "date_time")
     private LocalDateTime submitDateTime;
 

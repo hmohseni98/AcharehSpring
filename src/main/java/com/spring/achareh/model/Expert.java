@@ -5,9 +5,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.boot.context.properties.bind.DefaultValue;
-
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -35,6 +32,8 @@ public class Expert extends User {
     private Set<Speciality> specialities;
     @Column(name = "balance" , columnDefinition = "int default 0")
     private Integer balance;
+    @Column(name = "average_score" , columnDefinition = "int default 0")
+    private Integer averageScore;
 
     @Override
     public boolean equals(Object o) {
@@ -42,12 +41,12 @@ public class Expert extends User {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Expert expert = (Expert) o;
-        return status == expert.status && Arrays.equals(image, expert.image) && Objects.equals(specialities, expert.specialities) && Objects.equals(balance, expert.balance);
+        return status == expert.status && Arrays.equals(image, expert.image) && Objects.equals(specialities, expert.specialities) && Objects.equals(balance, expert.balance) && Objects.equals(averageScore, expert.averageScore);
     }
 
     @Override
     public int hashCode() {
-        int result = Objects.hash(super.hashCode(), status, specialities, balance);
+        int result = Objects.hash(super.hashCode(), status, specialities, balance, averageScore);
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }
@@ -64,6 +63,9 @@ public class Expert extends User {
                 ", image=" + Arrays.toString(image) +
                 ", specialities=" + specialities +
                 ", balance=" + balance +
+                ", averageScore=" + averageScore +
                 '}';
     }
+
 }
+
