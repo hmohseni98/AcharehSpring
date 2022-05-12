@@ -1,4 +1,4 @@
-package com.spring.achareh.util.specification;
+package com.spring.achareh.util;
 
 import com.spring.achareh.model.User;
 import org.springframework.data.jpa.domain.Specification;

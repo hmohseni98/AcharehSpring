@@ -4,6 +4,7 @@ import com.spring.achareh.customException.*;
 import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Offer;
 import com.spring.achareh.model.Order;
+import com.spring.achareh.model.enumration.AccountStatus;
 import com.spring.achareh.model.enumration.OrderStatus;
 import com.spring.achareh.repository.OfferRepository;
 import com.spring.achareh.service.ExpertService;
@@ -13,7 +14,6 @@ import com.spring.achareh.service.base.BaseServiceImpl;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalTime;
 import java.util.List;
 
@@ -30,7 +30,6 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
         this.orderService = orderService;
     }
 
-
     @Transactional
     @Override
     public void OfferRegister(Integer expertId, Integer orderId, Integer suggestionPrice,
@@ -39,6 +38,9 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
         try {
             Expert expert = expertService.findById(expertId).get();
             Order order = orderService.findById(orderId).get();
+            if(!expert.getStatus().equals(AccountStatus.active)){
+                throw new AccountNotActive();
+            }
             if (!expert.getSpecialities().contains(order.getSpeciality())) {
                 throw new DoNotHaveAccessToThisService();
             }
