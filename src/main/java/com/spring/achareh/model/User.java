@@ -47,4 +47,15 @@ public abstract class User extends BaseEntity<Integer> {
     public int hashCode() {
         return Objects.hash(super.hashCode(), firstName, lastName, email, password, registerDataTime);
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", registerDataTime=" + registerDataTime +
+                '}';
+    }
 }

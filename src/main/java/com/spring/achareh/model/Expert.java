@@ -51,4 +51,19 @@ public class Expert extends User {
         result = 31 * result + Arrays.hashCode(image);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Expert{" +
+                "firstName='" + super.getFirstName() + '\'' +
+                ", lastName='" + super.getLastName() + '\'' +
+                ", email='" + super.getEmail() + '\'' +
+                ", password='" + super.getPassword() + '\'' +
+                ", registerDataTime=" + super.getRegisterDataTime() +
+                ", status=" + status +
+                ", image=" + Arrays.toString(image) +
+                ", specialities=" + specialities +
+                ", balance=" + balance +
+                '}';
+    }
 }

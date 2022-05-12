@@ -3,14 +3,14 @@ package com.spring.achareh.service;
 import com.spring.achareh.model.User;
 import com.spring.achareh.service.base.BaseService;
 
-public interface UserService<S extends User> extends BaseService<S,Integer> {
+import java.util.List;
 
-    void signup (S s);
+public interface UserService extends BaseService<User,Integer> {
 
-    S login(String email, String password);
-
-    S findByEmail(String email);
+    User login(String email, String password);
 
     void changePassword(Integer userId, String oldPassword, String newPassword);
+
+    List<User> gridSearch(Integer userId, String email, String firstName, String lastName);
 
 }

@@ -22,7 +22,7 @@ public class Admin extends User {
 
     @Override
     public String toString() {
-        return "Person{" +
+        return "Admin{" +
                 "id='" + super.getId() + '\'' +
                 ", firstName='" + super.getFirstName() + '\'' +
                 ", lastName='" + super.getLastName() + '\'' +

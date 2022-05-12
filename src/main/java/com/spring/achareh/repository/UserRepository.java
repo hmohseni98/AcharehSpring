@@ -1,13 +1,16 @@
 package com.spring.achareh.repository;
 
-import com.spring.achareh.model.Admin;
 import com.spring.achareh.model.User;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
-@Repository
-public interface UserRepository<S extends User> extends JpaRepository<S,Integer> {
-    S findByEmailAndPassword(String email, String password);
+import java.util.List;
 
-    S findByEmail(String email);
+@Repository
+public interface UserRepository extends JpaRepository<User,Integer>,JpaSpecificationExecutor<User> {
+    User findByEmailAndPassword(String email, String password);
+
+    List<User> findAll(Specification<User> specification);
 }

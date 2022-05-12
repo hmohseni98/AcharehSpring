@@ -1,9 +1,6 @@
 package com.spring.achareh.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -20,6 +17,7 @@ import java.util.Objects;
 @SuperBuilder(toBuilder = true)
 @Cacheable
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+
 @Entity
 public class Customer extends User {
     @Column(name = "balance", columnDefinition = "int default 0")
@@ -37,5 +35,17 @@ public class Customer extends User {
     @Override
     public int hashCode() {
         return Objects.hash(super.hashCode(), balance);
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "firstName='" + super.getFirstName() + '\'' +
+                ", lastName='" + super.getLastName() + '\'' +
+                ", email='" + super.getEmail() + '\'' +
+                ", password='" + super.getPassword() + '\'' +
+                ", registerDataTime=" + super.getRegisterDataTime() +
+                ", balance=" + balance +
+                '}';
     }
 }

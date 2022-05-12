@@ -1,50 +1,48 @@
 package com.spring.achareh.service.impl;
 
 import com.spring.achareh.customException.OldPasswordIsIncorrect;
-import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.User;
-import com.spring.achareh.model.enumration.AccountStatus;
+import com.spring.achareh.util.UserGridSearch;
 import com.spring.achareh.repository.UserRepository;
-import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.UserService;
 import com.spring.achareh.service.base.BaseServiceImpl;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+
 @Transactional
 @Service
-public class UserServiceImpl<S extends User> extends BaseServiceImpl<S, Integer, UserRepository<S>>
-        implements UserService<S> {
+public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserRepository>
+        implements UserService {
+    private final UserGridSearch userGridSearch;
 
-    public UserServiceImpl(UserRepository<S> repository) {
+    public UserServiceImpl(UserRepository repository, UserGridSearch userGridSearch) {
         super(repository);
+        this.userGridSearch = userGridSearch;
     }
 
     @Override
-    public void signup(S s) {
-        // validate email in user interface
-        // validate password in user interface
-        // validate image size in user interface
-        repository.save(s);
-    }
-
-    @Override
-    public S login(String email, String password) {
-        return repository.findByEmailAndPassword(email,password);
-    }
-
-    @Override
-    public S findByEmail(String email) {
-        return repository.findByEmail(email);
+    public User login(String email, String password) {
+        return repository.findByEmailAndPassword(email, password);
     }
 
     @Override
     public void changePassword(Integer userId, String oldPassword, String newPassword) {
-        S s = repository.findById(userId).get();
-        if (!s.getPassword().equals(oldPassword)) {
+        User user = repository.findById(userId).get();
+        if (!user.getPassword().equals(oldPassword)) {
             throw new OldPasswordIsIncorrect();
         }
-        s.setPassword(newPassword);
-        repository.save(s);
+        user.setPassword(newPassword);
+        repository.save(user);
     }
+
+    @Override
+    public List<User> gridSearch(Integer userId, String email, String firstName, String lastName) {
+        Specification<User> specification = userGridSearch.gridSearch(userId, email, firstName, lastName);
+        return repository.findAll(specification);
+    }
+
 }
