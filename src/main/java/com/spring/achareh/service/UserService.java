@@ -5,6 +5,8 @@ import com.spring.achareh.service.base.BaseService;
 
 public interface UserService<S extends User> extends BaseService<S,Integer> {
 
+    void signup (S s);
+
     S login(String email, String password);
 
     S findByEmail(String email);

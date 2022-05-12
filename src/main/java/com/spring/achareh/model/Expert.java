@@ -1,13 +1,12 @@
 package com.spring.achareh.model;
 
 import com.spring.achareh.model.enumration.AccountStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
+import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.util.Arrays;
@@ -23,10 +22,11 @@ import java.util.Set;
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 public class Expert extends User {
+    @Builder.Default
     @Enumerated(EnumType.STRING)
-    private AccountStatus status;
+    private AccountStatus status = AccountStatus.waiting;
     private byte[] image;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "expert_speciality",
             joinColumns = { @JoinColumn(name = "expert_id") },
