@@ -2,7 +2,6 @@ package com.spring.achareh.repository;
 
 
 import com.spring.achareh.model.Customer;
-import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Order;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.OrderStatus;

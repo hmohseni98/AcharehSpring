@@ -1,7 +1,6 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.SuggestionPriceMustBeHigherThanTheBasePrice;
-import com.spring.achareh.customException.doNotHaveAccessToThisService;
+import com.spring.achareh.customException.*;
 import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Offer;
 import com.spring.achareh.model.Order;
@@ -11,10 +10,10 @@ import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.OfferService;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.base.BaseServiceImpl;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
             Expert expert = expertService.findById(expertId).get();
             Order order = orderService.findById(orderId).get();
             if (!expert.getSpecialities().contains(order.getSpeciality())) {
-                throw new doNotHaveAccessToThisService();
+                throw new DoNotHaveAccessToThisService();
             }
             if (suggestionPrice < order.getSpeciality().getBasePrice()) {
                 throw new SuggestionPriceMustBeHigherThanTheBasePrice();
@@ -59,13 +58,42 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
         }
     }
 
+    @Transactional
     @Override
-    public List<Offer> findAllOfferByExpert(Expert expert) {
-        return repository.findAllOfferByExpert(expert);
+    public void selectOfferByCustomer(Integer offerId, Integer orderId) {
+        Offer offer = repository.findById(offerId).get();
+        Order order = orderService.findById(orderId).get();
+        try {
+            if (!offer.getOrder().getId().equals(orderId)) {
+                throw new OfferAndOrderDoesNotMatch();
+            }
+            if (!order.getStatus().equals(OrderStatus.waitingExpertSelection)) {
+                throw new AccessDenied();
+            }
+            order.setAcceptOffer(offer);
+            order.setStatus(OrderStatus.dispatchOfAnExpert);
+            orderService.save(order);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 
+
+    @Transactional
     @Override
-    public List<Offer> findAllOfferByDate(LocalDate date) {
-        return repository.findAllOfferBySubmitDateTime(date);
+    public List<Offer> findAllOfferByOrder(Integer orderId, boolean sortByPrice, boolean sortByScore) {
+        Order order = orderService.findById(orderId).get();
+        if (sortByPrice && sortByScore) {
+            return repository.findAllOfferByOrder(order, Sort.by("suggestionPrice").ascending().and(Sort.by("score").ascending()));
+        }
+        if (sortByScore) {
+            return repository.findAllOfferByOrder(order, Sort.by("score").ascending());
+        }
+        if (sortByPrice) {
+            return repository.findAllOfferByOrder(order, Sort.by("suggestionPrice").ascending());
+        }
+        return repository.findAllOfferByOrder(order, null);
     }
+
+
 }
