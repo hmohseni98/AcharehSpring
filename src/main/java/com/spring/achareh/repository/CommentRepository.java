@@ -17,8 +17,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
 
     List<Comment> findAllByCustomer(Customer customer);
 
-    List<Comment> findAllByExpert(Expert expert);
-
     @Query(value = "select *  from comment " +
             "inner join orders o on o.id = comment.order_id " +
             "inner join speciality s on s.id = o.speciality_id " +

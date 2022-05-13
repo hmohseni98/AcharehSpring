@@ -20,18 +20,15 @@ import java.util.Objects;
 @Setter
 @SuperBuilder(toBuilder = true)
 @Table(name = "comment",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"customer_id", "order_id"})})
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"customer_id", "offer_id"})})
 @Entity
 public class Comment extends BaseEntity<Integer> {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
     @ManyToOne
-    @JoinColumn(name = "expert_id")
-    private Expert expert;
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+    @JoinColumn(name = "offer_id")
+    private Offer offer;
     @Column(name = "score", columnDefinition = "int")
     private Integer score;
     @Column(name = "description", columnDefinition = "varchar(255)")
@@ -46,11 +43,11 @@ public class Comment extends BaseEntity<Integer> {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Comment comment = (Comment) o;
-        return Objects.equals(customer, comment.customer) && Objects.equals(expert, comment.expert) && Objects.equals(order, comment.order) && Objects.equals(score, comment.score) && Objects.equals(description, comment.description) && Objects.equals(submitDateTime, comment.submitDateTime);
+        return Objects.equals(customer, comment.customer) && Objects.equals(offer, comment.offer) && Objects.equals(score, comment.score) && Objects.equals(description, comment.description) && Objects.equals(submitDateTime, comment.submitDateTime);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, expert, order, score, description, submitDateTime);
+        return Objects.hash(super.hashCode(), customer, offer, score, description, submitDateTime);
     }
 }

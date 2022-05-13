@@ -25,10 +25,10 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Integer, Commen
     @Override
     public void save(Comment comment) {
         try {
-            if (!(comment.getOrder().getCustomer().getId().equals(comment.getCustomer().getId()))){
+            if (!(comment.getOffer().getOrder().getCustomer().getId().equals(comment.getCustomer().getId()))){
                 throw new DoNotHaveAccessToThisOrder();
             }
-            if (!(comment.getOrder().getStatus().equals(OrderStatus.Paid))) {
+            if (!(comment.getOffer().getOrder().getStatus().equals(OrderStatus.Paid))) {
                 throw new StatusOfThisOrderHasNotBeenPaid();
             }
             if (!(comment.getScore() > 0 && comment.getScore() < 6)){
@@ -48,11 +48,6 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Integer, Commen
     @Override
     public List<Comment> findAllByCustomer(Customer customer) {
         return repository.findAllByCustomer(customer);
-    }
-
-    @Override
-    public List<Comment> findAllByExpert(Expert expert) {
-        return repository.findAllByExpert(expert);
     }
 
     @Override
