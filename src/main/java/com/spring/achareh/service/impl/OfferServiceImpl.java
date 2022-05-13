@@ -11,6 +11,7 @@ import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.OfferService;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.base.BaseServiceImpl;
+import com.spring.achareh.service.dto.OfferDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,7 +35,6 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
     @Override
     public void OfferRegister(Integer expertId, Integer orderId, Integer suggestionPrice,
                               Integer durationOfWork, LocalTime startWorkTime) {
-        Offer offer = new Offer();
         try {
             Expert expert = expertService.findById(expertId).get();
             Order order = orderService.findById(orderId).get();
@@ -47,11 +47,7 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
             if (suggestionPrice < order.getSpeciality().getBasePrice()) {
                 throw new SuggestionPriceMustBeHigherThanTheBasePrice();
             }
-            offer.setExpert(expert);
-            offer.setOrder(order);
-            offer.setSuggestionPrice(suggestionPrice);
-            offer.setDurationOfWork(durationOfWork);
-            offer.setStartWorkTime(startWorkTime);
+            Offer offer = new Offer(expert,order,null,suggestionPrice,durationOfWork,startWorkTime);
             repository.save(offer);
             order.setStatus(OrderStatus.waitingExpertSelection);
             orderService.save(order);
@@ -66,9 +62,6 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
         Offer offer = repository.findById(offerId).get();
         Order order = orderService.findById(orderId).get();
         try {
-            if (!offer.getOrder().getId().equals(orderId)) {
-                throw new OfferAndOrderDoesNotMatch();
-            }
             if (!order.getStatus().equals(OrderStatus.waitingExpertSelection)) {
                 throw new AccessDenied();
             }
@@ -83,18 +76,17 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
 
     @Transactional
     @Override
-    public List<Offer> findAllOfferByOrder(Integer orderId, boolean sortByPrice, boolean sortByScore) {
-        Order order = orderService.findById(orderId).get();
+    public List<OfferDto> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore) {
         if (sortByPrice && sortByScore) {
-            return repository.findAllOfferByOrder(order, Sort.by("suggestionPrice").ascending().and(Sort.by("score").ascending()));
+            return repository.findAllOfferByOrderId(orderId, Sort.by("expertSuggestionPrice").ascending().and(Sort.by("expertScore").descending()));
         }
         if (sortByScore) {
-            return repository.findAllOfferByOrder(order, Sort.by("score").ascending());
+            return repository.findAllOfferByOrderId(orderId, Sort.by("expertScore").descending());
         }
         if (sortByPrice) {
-            return repository.findAllOfferByOrder(order, Sort.by("suggestionPrice").ascending());
+            return repository.findAllOfferByOrderId(orderId, Sort.by("expertSuggestionPrice").ascending());
         }
-        return repository.findAllOfferByOrder(order, null);
+        return repository.findAllOfferByOrderId(orderId, null);
     }
 
 
