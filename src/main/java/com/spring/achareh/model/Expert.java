@@ -1,22 +1,18 @@
 package com.spring.achareh.model;
 
 import com.spring.achareh.model.enumration.AccountStatus;
+import com.spring.achareh.model.enumration.Role;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Objects;
 import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder(toBuilder = true)
-@Cacheable
-@Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @Entity
 public class Expert extends User {
     @Builder.Default
@@ -26,29 +22,23 @@ public class Expert extends User {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "expert_speciality",
-            joinColumns = { @JoinColumn(name = "expert_id") },
-            inverseJoinColumns = { @JoinColumn(name = "speciality_id") }
+            joinColumns = {@JoinColumn(name = "expert_id")},
+            inverseJoinColumns = {@JoinColumn(name = "speciality_id")}
     )
     private Set<Speciality> specialities;
-    @Column(name = "balance" , columnDefinition = "int default 0")
+    @Column(name = "balance", columnDefinition = "int default 0")
     private Integer balance;
-    @Column(name = "average_score" , columnDefinition = "int default 0")
+    @Column(name = "average_score", columnDefinition = "int default 0")
     private Integer averageScore;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Expert expert = (Expert) o;
-        return status == expert.status && Arrays.equals(image, expert.image) && Objects.equals(specialities, expert.specialities) && Objects.equals(balance, expert.balance) && Objects.equals(averageScore, expert.averageScore);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(super.hashCode(), status, specialities, balance, averageScore);
-        result = 31 * result + Arrays.hashCode(image);
-        return result;
+    @Builder
+    public Expert(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, AccountStatus status, byte[] image, Set<Speciality> specialities, Integer balance, Integer averageScore) {
+        super(firstName, lastName, email, password, registerDataTime, role);
+        this.status = status;
+        this.image = image;
+        this.specialities = specialities;
+        this.balance = balance;
+        this.averageScore = averageScore;
     }
 
     @Override

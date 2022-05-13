@@ -1,33 +1,25 @@
 package com.spring.achareh.model;
 
+import com.spring.achareh.model.enumration.Role;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import java.util.Objects;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder(toBuilder = true)
 @Entity
 public class Customer extends User {
     @Column(name = "balance", columnDefinition = "int default 0")
     private Integer balance;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Customer customer = (Customer) o;
-        return Objects.equals(balance, customer.balance);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), balance);
+    @Builder
+    public Customer(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, Integer balance) {
+        super(firstName, lastName, email, password, registerDataTime, role);
+        this.balance = balance;
     }
 
     @Override

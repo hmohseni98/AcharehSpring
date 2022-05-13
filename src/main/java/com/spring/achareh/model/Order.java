@@ -2,25 +2,20 @@ package com.spring.achareh.model;
 
 import com.spring.achareh.model.base.BaseEntity;
 import com.spring.achareh.model.enumration.OrderStatus;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-@SuperBuilder(toBuilder = true)
-@Entity
+@Builder
 @Table(name = "orders")
+@Entity
 public class Order extends BaseEntity<Integer> {
     @ManyToOne
     @JoinColumn(name = "customer_id")
@@ -46,17 +41,4 @@ public class Order extends BaseEntity<Integer> {
     @Column(name = "status")
     private OrderStatus status;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-        Order order = (Order) o;
-        return Objects.equals(customer, order.customer) && Objects.equals(speciality, order.speciality) && Objects.equals(acceptOffer, order.acceptOffer) && Objects.equals(description, order.description) && Objects.equals(suggestionPrice, order.suggestionPrice) && Objects.equals(submitDateTime, order.submitDateTime) && Objects.equals(workDate, order.workDate) && Objects.equals(address, order.address) && status == order.status;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(super.hashCode(), customer, speciality, acceptOffer, description, suggestionPrice, submitDateTime, workDate, address, status);
-    }
 }
