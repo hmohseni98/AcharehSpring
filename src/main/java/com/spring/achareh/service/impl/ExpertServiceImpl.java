@@ -38,6 +38,11 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
     }
 
     @Override
+    public Expert findExpertBySpecialityId(Integer expertId, Integer specialityId) {
+        return null;
+    }
+
+    @Override
     public void addExpertToSpeciality(Integer expertId, Integer specialityId) {
         Expert expert = repository.findById(expertId).get();
         Speciality speciality = specialityService.findById(specialityId).get();
@@ -45,7 +50,8 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
             if (!expert.getStatus().equals(AccountStatus.active)) {
                 throw new AccountNotActive();
             }
-            Set<Speciality> newSet = expert.getSpecialities();
+
+            Set<Speciality> newSet = specialityService.findSpecialityByExpertId(expert.getId());
             newSet.add(speciality);
             expert.setSpecialities(newSet);
             repository.save(expert);
@@ -58,8 +64,7 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
     public void removeExpertFromSpeciality(Integer expertId, Integer specialityId) {
         Expert expert = repository.findById(expertId).get();
         Speciality speciality = specialityService.findById(specialityId).get();
-
-        Set<Speciality> newSet= expert.getSpecialities();
+        Set<Speciality> newSet = specialityService.findSpecialityByExpertId(expert.getId());
         newSet.remove(speciality);
         expert.setSpecialities(newSet);
         repository.save(expert);
