@@ -10,7 +10,6 @@ import java.util.Arrays;
 import java.util.Set;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -19,7 +18,7 @@ public class Expert extends User {
     @Enumerated(EnumType.STRING)
     private AccountStatus status = AccountStatus.waiting;
     private byte[] image;
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany
     @JoinTable(
             name = "expert_speciality",
             joinColumns = {@JoinColumn(name = "expert_id")},
@@ -30,6 +29,8 @@ public class Expert extends User {
     private Integer balance;
     @Column(name = "average_score", columnDefinition = "int default 0")
     private Integer averageScore;
+
+    public Expert(){}
 
     @Builder
     public Expert(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, AccountStatus status, byte[] image, Set<Speciality> specialities, Integer balance, Integer averageScore) {
