@@ -2,7 +2,6 @@ package com.spring.achareh.service;
 
 import com.spring.achareh.model.Comment;
 import com.spring.achareh.model.Customer;
-import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.service.base.BaseService;
 
