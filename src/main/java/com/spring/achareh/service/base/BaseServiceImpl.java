@@ -35,11 +35,13 @@ public abstract class BaseServiceImpl<S extends BaseEntity<ID>, ID extends Seria
         repository.save(s);
     }
 
+    @Transactional
     @Override
     public Optional<S> findById(ID id) {
         return repository.findById(id);
     }
 
+    @Transactional
     @Override
     public List<S> findAll() {
         return repository.findAll();
