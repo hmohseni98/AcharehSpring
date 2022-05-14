@@ -51,10 +51,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
 
     @Transactional
     @Override
-    public void registerOrder(Integer customer_id, Integer speciality_id, Integer suggestionPrice,
+    public void orderRegister(Integer customer_id, Integer speciality_id, Integer suggestionPrice,
                               String description, LocalDate workDate, String address) {
-        Order order = new Order();
         try {
+            Customer customer = customerService.findById(customer_id).get();
             Speciality speciality = specialityService.findById(speciality_id).get();
             if (suggestionPrice < speciality.getBasePrice()) {
                 throw new SuggestionPriceMustBeHigherThanTheBasePrice();
@@ -62,13 +62,8 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
             if (workDate.isBefore(LocalDate.now())) {
                 throw new InvalidDate();
             }
-            order.setCustomer(customerService.findById(customer_id).get());
-            order.setSpeciality(speciality);
-            order.setSuggestionPrice(suggestionPrice);
-            order.setDescription(description);
-            order.setWorkDate(workDate);
-            order.setAddress(address);
-            order.setStatus(OrderStatus.waitingForExpertSuggestions);
+            Order order = new Order(customer, speciality, null, description, suggestionPrice
+                    , null, workDate, address, OrderStatus.waitingForExpertSuggestions);
             repository.save(order);
         } catch (Exception e) {
             System.out.println(e.getMessage());

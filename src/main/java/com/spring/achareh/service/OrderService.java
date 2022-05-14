@@ -18,6 +18,6 @@ public interface OrderService extends BaseService<Order, Integer> {
 
     List<Order> findAllByStatus(OrderStatus status);
 
-    void registerOrder(Integer customer_id,Integer speciality_id , Integer suggestionPrice,
+    void orderRegister(Integer customer_id, Integer speciality_id, Integer suggestionPrice,
                        String description, LocalDate workDate, String address);
 }
