@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SpecialityServiceImpl extends BaseServiceImpl<Speciality, Integer, SpecialityRepository>
@@ -33,5 +34,10 @@ public class SpecialityServiceImpl extends BaseServiceImpl<Speciality, Integer, 
     @Override
     public List<Speciality> findAllByCategory(Category category) {
         return repository.findAllByCategory(category);
+    }
+
+    @Override
+    public Set<Speciality> findSpecialityByExpertId(Integer expertId) {
+        return repository.findSpecialityByExpertId(expertId);
     }
 }
