@@ -1,9 +1,10 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.AccountNotActive;
+import com.spring.achareh.customException.AccountInActive;
 import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.AccountStatus;
+import com.spring.achareh.model.enumration.Role;
 import com.spring.achareh.repository.ExpertRepository;
 import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.SpecialityService;
@@ -27,6 +28,15 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
 
     @Transactional
     @Override
+    public void save(Expert expert) {
+        expert.setRole(Role.Expert);
+        expert.setAverageScore(0);
+        expert.setBalance(0);
+        super.save(expert);
+    }
+
+    @Transactional
+    @Override
     public List<Expert> findAllByStatus(AccountStatus status) {
         return repository.findAllByStatus(status);
     }
@@ -46,18 +56,13 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
     public void addExpertToSpeciality(Integer expertId, Integer specialityId) {
         Expert expert = repository.findById(expertId).get();
         Speciality speciality = specialityService.findById(specialityId).get();
-        try {
-            if (!expert.getStatus().equals(AccountStatus.active)) {
-                throw new AccountNotActive();
-            }
-
-            Set<Speciality> newSet = specialityService.findSpecialityByExpertId(expert.getId());
-            newSet.add(speciality);
-            expert.setSpecialities(newSet);
-            repository.save(expert);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        if (expert.getStatus() == AccountStatus.inActive){
+            throw new AccountInActive();
         }
+        Set<Speciality> newSet = specialityService.findSpecialityByExpertId(expert.getId());
+        newSet.add(speciality);
+        expert.setSpecialities(newSet);
+        repository.save(expert);
     }
 
     @Override
@@ -69,6 +74,4 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
         expert.setSpecialities(newSet);
         repository.save(expert);
     }
-
-
 }

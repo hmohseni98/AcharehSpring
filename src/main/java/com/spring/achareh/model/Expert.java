@@ -3,10 +3,10 @@ package com.spring.achareh.model;
 import com.spring.achareh.model.enumration.AccountStatus;
 import com.spring.achareh.model.enumration.Role;
 import lombok.*;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -17,6 +17,7 @@ public class Expert extends User {
     @Builder.Default
     @Enumerated(EnumType.STRING)
     private AccountStatus status = AccountStatus.waiting;
+    @Type(type = "org.hibernate.type.BinaryType")
     private byte[] image;
     @ManyToMany
     @JoinTable(
@@ -25,9 +26,9 @@ public class Expert extends User {
             inverseJoinColumns = {@JoinColumn(name = "speciality_id")}
     )
     private Set<Speciality> specialities;
-    @Column(name = "balance", columnDefinition = "int default 0")
+    @Column(name = "balance", columnDefinition = "int")
     private Integer balance;
-    @Column(name = "average_score", columnDefinition = "int default 0")
+    @Column(name = "average_score", columnDefinition = "int")
     private Integer averageScore;
 
     public Expert(){}
@@ -51,7 +52,7 @@ public class Expert extends User {
                 ", password='" + super.getPassword() + '\'' +
                 ", registerDataTime=" + super.getRegisterDataTime() +
                 ", status=" + status +
-                ", image=" + Arrays.toString(image) +
+                ", image=" + image +
                 ", specialities=" + specialities +
                 ", balance=" + balance +
                 ", averageScore=" + averageScore +
