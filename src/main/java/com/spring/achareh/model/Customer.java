@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 public class Customer extends User {
-    @Column(name = "balance", columnDefinition = "int default 0")
+    @Column(name = "balance", columnDefinition = "int")
     private Integer balance;
 
     @Builder

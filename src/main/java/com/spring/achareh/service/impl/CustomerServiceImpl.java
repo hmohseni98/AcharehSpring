@@ -12,4 +12,10 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Integer, Cust
     public CustomerServiceImpl(CustomerRepository repository) {
         super(repository);
     }
+
+    @Override
+    public void save(Customer customer) {
+        customer.setBalance(0);
+        super.save(customer);
+    }
 }
