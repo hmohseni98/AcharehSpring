@@ -33,13 +33,13 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
 
     @Transactional
     @Override
-    public void OfferRegister(Integer expertId, Integer orderId, Integer suggestionPrice,
+    public void offerRegister(Integer expertId, Integer orderId, Integer suggestionPrice,
                               Integer durationOfWork, LocalTime startWorkTime) {
         try {
             Expert expert = expertService.findById(expertId).get();
             Order order = orderService.findById(orderId).get();
             if(!expert.getStatus().equals(AccountStatus.active)){
-                throw new AccountNotActive();
+                throw new AccountInActive();
             }
             if (!expert.getSpecialities().contains(order.getSpeciality())) {
                 throw new DoNotHaveAccessToThisService();

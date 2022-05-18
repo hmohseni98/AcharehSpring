@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public interface OfferService extends BaseService<Offer, Integer> {
-    void OfferRegister(Integer expertId, Integer orderId, Integer suggestionPrice, Integer durationOfWork, LocalTime startWorkTime);
+    void offerRegister(Integer expertId, Integer orderId, Integer suggestionPrice, Integer durationOfWork, LocalTime startWorkTime);
 
     List<OfferDto> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore);
 
