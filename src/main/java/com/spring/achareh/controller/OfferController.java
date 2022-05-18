@@ -14,7 +14,11 @@ import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 
 @RestController
 @RequestMapping("api/offer")
@@ -51,4 +55,11 @@ public class OfferController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/selectOfferByCustomer")
+    public ResponseEntity<Offer> selectOfferByCustomer(@RequestParam Integer offerId, Integer orderId){
+        offerService.selectOfferByCustomer(offerId, orderId);
+        return ResponseEntity.ok().build();
+    }
+
 }
