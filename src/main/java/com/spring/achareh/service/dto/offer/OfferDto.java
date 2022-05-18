@@ -1,4 +1,4 @@
-package com.spring.achareh.service.dto;
+package com.spring.achareh.service.dto.offer;
 
 import lombok.*;
 

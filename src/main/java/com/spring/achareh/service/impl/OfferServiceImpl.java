@@ -11,7 +11,7 @@ import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.OfferService;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.base.BaseServiceImpl;
-import com.spring.achareh.service.dto.OfferDto;
+import com.spring.achareh.service.dto.offer.OfferDto;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,21 +33,21 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
 
     @Transactional
     @Override
-    public void offerRegister(Integer expertId, Integer orderId, Integer suggestionPrice,
-                              Integer durationOfWork, LocalTime startWorkTime) {
+    public void offerRegister(Offer offer) {
         try {
-            Expert expert = expertService.findById(expertId).get();
-            Order order = orderService.findById(orderId).get();
+            Expert expert = expertService.findById(offer.getExpert().getId()).get();
+            Order order = orderService.findById(offer.getOrder().getId()).get();
             if(!expert.getStatus().equals(AccountStatus.active)){
-                throw new AccountInActive();
+                throw new AccountNotActive();
             }
             if (!expert.getSpecialities().contains(order.getSpeciality())) {
                 throw new DoNotHaveAccessToThisService();
             }
-            if (suggestionPrice < order.getSpeciality().getBasePrice()) {
+            if (offer.getSuggestionPrice() < order.getSpeciality().getBasePrice()) {
                 throw new SuggestionPriceMustBeHigherThanTheBasePrice();
             }
-            Offer offer = new Offer(expert,order,null,suggestionPrice,durationOfWork,startWorkTime);
+            offer.setExpert(expert);
+            offer.setOrder(order);
             repository.save(offer);
             order.setStatus(OrderStatus.waitingExpertSelection);
             orderService.save(order);
