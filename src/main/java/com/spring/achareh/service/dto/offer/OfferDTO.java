@@ -10,7 +10,7 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @ToString
-public class OfferDto {
+public class OfferDTO {
     private Integer id;
 
     private String expertFullName;
@@ -24,5 +24,4 @@ public class OfferDto {
     private Integer expertSuggestionPrice;
 
     private Integer expertScore;
-
 }

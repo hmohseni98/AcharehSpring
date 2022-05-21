@@ -11,11 +11,11 @@ import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.OfferService;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.base.BaseServiceImpl;
-import com.spring.achareh.service.dto.offer.OfferDto;
+import com.spring.achareh.service.dto.offer.OfferDTO;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalTime;
+
 import java.util.List;
 
 
@@ -76,7 +76,7 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
 
     @Transactional
     @Override
-    public List<OfferDto> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore) {
+    public List<OfferDTO> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore) {
         if (sortByPrice && sortByScore) {
             return repository.findAllOfferByOrderId(orderId, Sort.by("expertSuggestionPrice").ascending().and(Sort.by("expertScore").descending()));
         }

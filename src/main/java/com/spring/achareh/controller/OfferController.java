@@ -2,23 +2,16 @@ package com.spring.achareh.controller;
 
 import com.spring.achareh.model.Offer;
 import com.spring.achareh.service.OfferService;
+import com.spring.achareh.service.dto.offer.OfferDTO;
 import com.spring.achareh.service.dto.offer.OfferRegisterDTO;
-import org.hibernate.SessionFactory;
-import org.hibernate.boot.MetadataSources;
-import org.hibernate.boot.registry.StandardServiceRegistry;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
-import org.modelmapper.TypeMap;
 import org.modelmapper.convention.MatchingStrategies;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/offer")
@@ -57,9 +50,15 @@ public class OfferController {
     }
 
     @PostMapping("/selectOfferByCustomer")
-    public ResponseEntity<Offer> selectOfferByCustomer(@RequestParam Integer offerId, Integer orderId){
+    public ResponseEntity<Offer> selectOfferByCustomer(@RequestParam Integer offerId, Integer orderId) {
         offerService.selectOfferByCustomer(offerId, orderId);
         return ResponseEntity.ok().build();
+    }
+
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    @PostMapping("/findAllOfferByOrderId")
+    public List<OfferDTO> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore) {
+        return offerService.findAllOfferByOrderId(orderId, sortByPrice, sortByScore);
     }
 
 }
