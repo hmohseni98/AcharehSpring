@@ -5,8 +5,6 @@ import com.spring.achareh.model.Order;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.OrderStatus;
 import com.spring.achareh.service.base.BaseService;
-
-import java.time.LocalDate;
 import java.util.List;
 
 public interface OrderService extends BaseService<Order, Integer> {
@@ -18,6 +16,5 @@ public interface OrderService extends BaseService<Order, Integer> {
 
     List<Order> findAllByStatus(OrderStatus status);
 
-    void orderRegister(Integer customer_id, Integer speciality_id, Integer suggestionPrice,
-                       String description, LocalDate workDate, String address);
+    void orderRegister(Order order);
 }

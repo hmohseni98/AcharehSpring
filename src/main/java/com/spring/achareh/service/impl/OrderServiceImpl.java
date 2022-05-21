@@ -9,6 +9,7 @@ import com.spring.achareh.service.CustomerService;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.SpecialityService;
 import com.spring.achareh.service.base.BaseServiceImpl;
+import com.spring.achareh.service.dto.order.OrderDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,19 +52,19 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
 
     @Transactional
     @Override
-    public void orderRegister(Integer customer_id, Integer speciality_id, Integer suggestionPrice,
-                              String description, LocalDate workDate, String address) {
+    public void orderRegister(Order order) {
         try {
-            Customer customer = customerService.findById(customer_id).get();
-            Speciality speciality = specialityService.findById(speciality_id).get();
-            if (suggestionPrice < speciality.getBasePrice()) {
+            Customer customer = customerService.findById(order.getCustomer().getId()).get();
+            Speciality speciality = specialityService.findById(order.getSpeciality().getId()).get();
+            if (order.getSuggestionPrice() < speciality.getBasePrice()) {
                 throw new SuggestionPriceMustBeHigherThanTheBasePrice();
             }
-            if (workDate.isBefore(LocalDate.now())) {
+            if (order.getWorkDate().isBefore(LocalDate.now())) {
                 throw new InvalidDate();
             }
-            Order order = new Order(customer, speciality, null, description, suggestionPrice
-                    , null, workDate, address, OrderStatus.waitingForExpertSuggestions);
+            order.setCustomer(customer);
+            order.setSpeciality(speciality);
+            order.setStatus(OrderStatus.waitingForExpertSuggestions);
             repository.save(order);
         } catch (Exception e) {
             System.out.println(e.getMessage());
