@@ -1,6 +1,6 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.AccountInActive;
+import com.spring.achareh.customException.AccountNotActive;
 import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.AccountStatus;
@@ -57,7 +57,7 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
         Expert expert = repository.findById(expertId).get();
         Speciality speciality = specialityService.findById(specialityId).get();
         if (expert.getStatus() == AccountStatus.inActive){
-            throw new AccountInActive();
+            throw new AccountNotActive();
         }
         Set<Speciality> newSet = specialityService.findSpecialityByExpertId(expert.getId());
         newSet.add(speciality);
