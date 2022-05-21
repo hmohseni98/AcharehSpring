@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface UserService extends BaseService<User,Integer> {
 
-    User login(String email, String password);
+    Boolean login(String email, String password);
 
     void changePassword(Integer userId, String oldPassword, String newPassword);
 

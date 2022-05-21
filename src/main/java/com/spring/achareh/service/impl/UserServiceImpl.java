@@ -25,8 +25,8 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserReposito
     }
 
     @Override
-    public User login(String email, String password) {
-        return repository.findByEmailAndPassword(email, password);
+    public Boolean login(String email, String password) {
+        return repository.existsByEmailAndPassword(email, password);
     }
 
     @Override
