@@ -1,0 +1,1 @@
+jQuery(document).ready(function ($) {WidgetSetting.setWidgetSetting('wze55', 'submitUrl', '/api/wz-form/wze55');})
