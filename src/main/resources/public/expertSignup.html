@@ -232,7 +232,6 @@
                 var getLastName = $("#wze101-wz-input").val();
                 var getEmail = $("#wze102-wz-input").val();
                 var getPassword = $("#psw").val();
-
                 var form = $('signup-form')[0];
                 var formData = new FormData(form);
 
@@ -243,7 +242,7 @@
                 formData.append('image', $('input[type=file]')[0].files[0]);
 
                 $.ajax({
-                    url: 'http://127.0.0.1:8080/api/expert/register',
+                    url: 'api/expert/register',
                     method: 'POST',
                     data: formData,
                     contentType: false,
