@@ -1,5 +1,6 @@
 package com.spring.achareh.controller;
 
+import com.spring.achareh.exceptionHandler.customException.UsernameOrPasswordInCorrectException;
 import com.spring.achareh.model.User;
 import com.spring.achareh.model.enumration.Role;
 import com.spring.achareh.service.UserService;
@@ -33,19 +34,18 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(String email, String password, HttpServletResponse response) {
+    @ResponseStatus(HttpStatus.OK)
+    public void login(String email, String password, HttpServletResponse response) {
 
         User user = userService.login(email, password);
-        if (user != null) {
-            String randomValue = UUID.randomUUID().toString();
-            userMap.put(randomValue, user);
-            Cookie cookie = new Cookie("sec_data", randomValue);
-            cookie.setPath("/");
-            cookie.setMaxAge(-1);
-            response.addCookie(cookie);
-            return ResponseEntity.ok().build();
-        } else
-            return ResponseEntity.notFound().build();
+        if (user == null)
+            throw new UsernameOrPasswordInCorrectException();
+        String randomValue = UUID.randomUUID().toString();
+        userMap.put(randomValue, user);
+        Cookie cookie = new Cookie("sec_data", randomValue);
+        cookie.setPath("/");
+        cookie.setMaxAge(-1);
+        response.addCookie(cookie);
     }
 
     @PostMapping("/changePassword")
