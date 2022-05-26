@@ -3,12 +3,14 @@ package com.spring.achareh.controller;
 import com.spring.achareh.model.Order;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.dto.order.OrderDTO;
+import com.spring.achareh.service.dto.order.OrderRegisterDTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("api/order")
@@ -21,7 +23,8 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    public ResponseEntity<Order> orderRegister(@Valid OrderDTO orderDTO){
+    @PostMapping("/register")
+    public ResponseEntity<Order> orderRegister(@Valid @ModelAttribute OrderRegisterDTO orderDTO){
         Order order = modelMapper.map(orderDTO,Order.class);
         orderService.orderRegister(order);
         if (order.getId() != null){
@@ -29,5 +32,11 @@ public class OrderController {
         }else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/find-all")
+    @ResponseStatus(HttpStatus.OK)
+    public List<OrderDTO> findAll(){
+        return orderService.selectAllByStatus();
     }
 }

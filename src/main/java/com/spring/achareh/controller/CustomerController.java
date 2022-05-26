@@ -5,12 +5,14 @@ import com.spring.achareh.model.Customer;
 import com.spring.achareh.service.CustomerService;
 import com.spring.achareh.service.dto.customer.CustomerRegisterDTO;
 import org.modelmapper.ModelMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
+@CrossOrigin
 @RequestMapping("api/customer")
 public class CustomerController {
 
@@ -23,13 +25,9 @@ public class CustomerController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Admin> register(CustomerRegisterDTO customerDTO) {
+    @ResponseStatus(HttpStatus.OK)
+    public void save(@Valid @ModelAttribute CustomerRegisterDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customerService.save(customer);
-        if (customer.getId() != null) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }

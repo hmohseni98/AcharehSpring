@@ -4,9 +4,10 @@ import com.spring.achareh.model.Admin;
 import com.spring.achareh.service.AdminService;
 import com.spring.achareh.service.dto.admin.AdminRegisterDTO;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -22,13 +23,9 @@ public class AdminController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Admin> register(AdminRegisterDTO adminDTO){
-        Admin admin = modelMapper.map(adminDTO,Admin.class);
+    @ResponseStatus(HttpStatus.OK)
+    public void register(AdminRegisterDTO adminDTO) {
+        Admin admin = modelMapper.map(adminDTO, Admin.class);
         adminService.save(admin);
-        if (admin.getId() != null){
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 }
