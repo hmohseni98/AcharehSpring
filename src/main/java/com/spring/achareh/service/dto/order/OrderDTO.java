@@ -5,10 +5,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
 import java.time.LocalDate;
 
 @AllArgsConstructor
@@ -16,26 +12,15 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class OrderDTO {
-    @NotEmpty
-    @Digits(integer = 6, fraction = 0)
-    private Integer customerId;
+    private Integer id;
 
-    @NotEmpty
-    @Digits(integer = 6, fraction = 0)
-    private Integer specialityId;
+    private String serviceName;
 
-    @NotEmpty
-    @Size(min = 10, max = 250)
+    private String customerFullName;
+
     private String description;
 
-    @NotEmpty
-    @Digits(integer = 6, fraction = 0)
     private Integer suggestionPrice;
 
-    @NotEmpty
-    @Future
-    private LocalDate workDate;
-
-    @Size(min = 10, max = 250)
-    private String address;
+    private LocalDate date;
 }

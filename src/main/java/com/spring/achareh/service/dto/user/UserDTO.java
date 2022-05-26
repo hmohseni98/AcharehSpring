@@ -1,5 +1,6 @@
 package com.spring.achareh.service.dto.user;
 
+import com.spring.achareh.model.enumration.Role;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,7 @@ public class UserDTO {
     private String lastName;
 
     private String email;
+
+    private Role role;
 
 }

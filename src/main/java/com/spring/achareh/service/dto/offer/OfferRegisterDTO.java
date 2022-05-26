@@ -27,6 +27,6 @@ public class OfferRegisterDTO {
     @NotEmpty
     private Integer durationOfWork;
     @NotEmpty
-    private LocalTime startWorkTime;
+    private String startWorkTime;
 }
 

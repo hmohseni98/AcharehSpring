@@ -15,13 +15,14 @@ public class OfferDTO {
 
     private String expertFullName;
 
+    private String serviceName;
+
     private Integer durationOfWork;
+
+    private String orderDescription;
 
     private LocalDate workDate;
 
-    private LocalTime startWorkTime;
-
     private Integer expertSuggestionPrice;
 
-    private Integer expertScore;
 }
