@@ -15,14 +15,29 @@ public interface OfferRepository extends JpaRepository<Offer, Integer> {
 
     @Query("select new com.spring.achareh.service.dto.offer.OfferDTO(o.id , " +
             "concat(e.firstName,' ',e.lastName) as expertFullName , " +
+            "s.name as serviceName ," +
             "o.durationOfWork , " +
+            "a.description as orderDescription , " +
             "a.workDate , " +
-            "o.startWorkTime , " +
-            "o.suggestionPrice as expertSuggestionPrice , " +
-            "e.averageScore as expertScore ) " +
+            "o.suggestionPrice as expertSuggestionPrice ) " +
             "from com.spring.achareh.model.Offer o " +
             "join o.order a " +
             "join o.expert e " +
+            "join a.speciality s " +
             "where a.id = ?1")
     List<OfferDTO> findAllOfferByOrderId(Integer orderId, Sort sort);
+
+    @Query("select new com.spring.achareh.service.dto.offer.OfferDTO(o.id , " +
+            "concat(e.firstName,' ',e.lastName) as expertFullName , " +
+            "s.name as serviceName ," +
+            "o.durationOfWork , " +
+            "a.description as orderDescription , " +
+            "a.workDate , " +
+            "o.suggestionPrice as expertSuggestionPrice ) " +
+            "from com.spring.achareh.model.Offer o " +
+            "join o.order a " +
+            "join o.expert e " +
+            "join a.speciality s " +
+            "where e.id = ?1")
+    List<OfferDTO> findAllOfferByExpertId(Integer expertId);
 }

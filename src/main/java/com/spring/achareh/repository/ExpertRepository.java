@@ -13,6 +13,8 @@ import java.util.List;
 public interface ExpertRepository extends JpaRepository<Expert, Integer> {
     List<Expert> findAllByStatus(AccountStatus status);
 
+    Expert findExpertByEmail (String email);
+
     @Query(value = "select * from users " +
             "inner join expert_speciality es on users.id = es.expert_id " +
             "inner join speciality s on s.id = es.speciality_id " +
