@@ -29,21 +29,28 @@
     <script>
         $(Document).ready(function () {
             $("#wze63").click(function () {
-                var email = $("#wze56-wz-input").val().trim();
-                var password = $("#wze58-wz-input").val().trim();
+                var email = $("#wze56-wz-input").val();
+                var password = $("#wze58-wz-input").val();
+
+                var form = new FormData();
+
+                form.append('email', email);
+                form.append('password', password);
+
                 if (email != "" && password != "") {
                     $.ajax({
-                        url: 'http://localhost:8080/api/user/login',
-                        cache: false,
-                        type: 'post',
-                        data: {email: email, password: password},
+                        url: 'api/user/login',
+                        method: 'post',
+                        data: form,
+                        contentType: false,
+                        processData: false,
                         success: function () {
                             window.location = "index.html";
                         },
-                        error: function () {
-                            $("#message").html("نام کاربری یا رمز عبور صحیح نمی باشد")
+                        error: function (i) {
+                            $("#message").html(i.responseText);
                         }
-                    })
+                    });
                 }
 
             });
@@ -158,7 +165,7 @@
                                             </div>
                                         </div>
                                     </a></form>
-                                <p id="message" style="color: red;direction: rtl" ></p></div>
+                                <p id="message" style="color: red;direction: rtl"></p></div>
                         </div>
                         <div id='wze64' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
                              wz-fix-line-height2 wz-autoheight>
@@ -265,13 +272,12 @@
             </div>
         </div>
     </div>
-    <!--    <script type="text/javascript" src="js/jquery.min.js"></script>-->
-    <!--    <script type="text/javascript" src="js/jquery.toast.min.js"></script>-->
-    <!--    <script type="text/javascript" src="js/lodash.min.js"></script>-->
-    <!--    <script type="text/javascript" src="js/remodal.min.js"></script>-->
-
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="js/lodash.min.js"></script>
+    <script type="text/javascript" src="js/remodal.min.js"></script>
     <script type="text/javascript" src="js/frontBase.js"></script>
-    <!--    <script type="text/javascript" src="js/main.js"></script>-->
+    <script type="text/javascript" src="js/main.js"></script>
 </div>
 </body>
 </html>

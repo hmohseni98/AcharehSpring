@@ -196,6 +196,33 @@
                     $("#errorText").html("فیلد ها نمیتوانند خالی باشند");
                     return false;
                 }
+
+                var getFirstName = $("#wze118-wz-input").val();
+                var getLastName = $("#wze119-wz-input").val();
+                var getEmail = $("#wze120-wz-input").val();
+                var getPassword = $("#psw").val();
+
+                var form = $('signup-form')[0];
+                var formData = new FormData(form);
+
+                formData.append('firstName',getFirstName);
+                formData.append('lastName',getLastName);
+                formData.append('email',getEmail);
+                formData.append('password',getPassword);
+
+                $.ajax({
+                    url: '/api/customer/register',
+                    method: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function () {
+                        window.location = "index.html";
+                    },
+                    error: function (i) {
+                        $("#errorText").html(i.responseText);
+                    }
+                });
             });
         })
 
@@ -232,13 +259,12 @@
                 <div class='wzc4 wz-template'>
                     <div class='wzc4-bg'></div>
                     <div class='wzc4-content wz-box-content wz-element-container'><a id='wze9' class='wz-element'
-                                                                                     data-widget='wz-button'
                                                                                      href='expertSignup.html'
                                                                                      target='_self'>
                         <div class='wzc47 wz-template'>
                             <div class='wzc47-bg'></div>
                             <span class='wzc47-content wz-element-content'>ثبت نام</span></div>
-                    </a><a id='wze10' class='wz-element' data-widget='wz-button'
+                    </a><a id='wze10' class='wz-element'
                            href='login.html' target='_self'>
                         <div class='wzc47 wz-template'>
                             <div class='wzc47-bg'></div>
@@ -267,7 +293,7 @@
                     <div class='wzc4-bg'></div>
                     <div class='wzc4-content wz-box-content wz-element-container'><a id='wze115' class='wz-element'
                                                                                      data-widget='wz-box'
-                                                                                     href='https://6285c741b06d6.mywebzi.ir/صفحه-ثبت-نام/'
+                                                                                     href='expertSignup.html'
                                                                                      target='_self' data-minheight='1'
                                                                                      data-minwidth='1'>
                         <div class='wzc48 wz-template'>
@@ -287,12 +313,12 @@
                             </div>
                         </div>
                     </a>
-                        <div id='wze117' class='wz-element' data-widget='wz-form' data-handles='w, e'
+                        <div id='wze117' class='wz-element' data-handles='w, e'
                              data-formname='ثبت نام'>
                             <div class='wzc63 wz-template'>
                                 <form id="signup-form"
                                       class='wzc63-form wz-form-container, wz-element-container-prevent-new-element wz-element-container'>
-                                    <div id='wze118' class='wz-element' data-widget='wz-inputText'
+                                    <div id='wze118' class='wz-element'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'><label
@@ -307,7 +333,7 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze119' class='wz-element' data-widget='wz-inputText'
+                                    <div id='wze119' class='wz-element'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'><label
@@ -323,7 +349,7 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze120' class='wz-element' data-widget='wz-inputText'
+                                    <div id='wze120' class='wz-element'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'><label
@@ -339,7 +365,7 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze121' class='wz-element' data-widget='wz-inputText'
+                                    <div id='wze121' class='wz-element'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'>
@@ -357,7 +383,7 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze122' class='wz-element' data-widget='wz-inputText'
+                                    <div id='wze122' class='wz-element'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'>
@@ -374,7 +400,7 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <a id='wze124' class='wz-element' data-containment='parent' href="www.google.com">
+                                    <a id='wze124' class='wz-element' data-containment='parent'>
                                         <div class='wzc65 wz-template'>
                                             <div class='wzc65-bg'></div>
                                             <span class='wzc65-content wz-element-content'>ثبت</span></div>
@@ -382,7 +408,7 @@
                                 <p id="errorText" style="direction: rtl;color: red"></p>
                             </div>
                         </div>
-                        <div id='wze130' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
+                        <div id='wze130' class='wz-element' data-handles='w, e' data-minwidth='10'
                              wz-fix-line-height2 wz-autoheight>
                             <div class='wzc28 wz-template'>
                                 <div class='wzc28-text wz-element-content'><h2 class="wz-font-h2" dir="rtl"

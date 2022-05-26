@@ -20,6 +20,7 @@
           href="css/remodal-default-theme.css"/>
     <link rel="stylesheet" type="text/css" href="https://webzi.ir/static/0.0.1/editor/css/base.css?ver=208"/>
     <link rel="stylesheet" type="text/css" href="https://6285c741b06d6.mywebzi.ir/theme/css/style.css?ver=1652985837"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>
         .wz-loader-container {
             position: fixed;
@@ -232,6 +233,7 @@
                 var getLastName = $("#wze101-wz-input").val();
                 var getEmail = $("#wze102-wz-input").val();
                 var getPassword = $("#psw").val();
+
                 var form = $('signup-form')[0];
                 var formData = new FormData(form);
 
@@ -250,27 +252,10 @@
                     success: function () {
                         window.location = "index.html";
                     },
-                    error: function () {
-                        $("#errorText").html("ثبت نام با مشکل مواجه شد");
+                    error: function (i) {
+                        $("#errorText").html(i.responseText);
                     }
                 });
-                // $.ajax({
-                //     url: 'http://localhost:8080/api/expert/register',
-                //     cache: false,
-                //     type: 'post',
-                //     contentType: 'form',
-                //     dataType: 'json',
-                //     data: {
-                //         firstName: firstNameSet, lastName: lastNameSet, email: emailSet
-                //         , password: passwordSet, image: imageSet
-                //     },
-                //     success: function () {
-                //         window.location = "index.html";
-                //     },
-                //     error: function () {
-                //         $("#errorText").html("ثبت نام با مشکل مواجه شد");
-                //     }
-                // })
             });
         })
         var mvp = document.getElementById('wz-viewport');
@@ -340,8 +325,7 @@
                 <div class='wzc4 wz-template'>
                     <div class='wzc4-bg'></div>
                     <div class='wzc4-content wz-box-content wz-element-container'><a id='wze92' class='wz-element'
-                                                                                     data-widget='wz-box'
-                                                                                     href='expertSignup.html'
+                                                                                     href='customerSignup.html'
                                                                                      target='_self' data-minheight='1'
                                                                                      data-minwidth='1'>
                         <div class='wzc48 wz-template'>
