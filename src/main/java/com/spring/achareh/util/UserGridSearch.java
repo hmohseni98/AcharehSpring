@@ -1,8 +1,10 @@
 package com.spring.achareh.util;
 
 import com.spring.achareh.model.User;
+import com.spring.achareh.model.enumration.Role;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
+
 import javax.persistence.criteria.Predicate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,13 +12,13 @@ import java.util.List;
 @Component
 public class UserGridSearch {
 
-    public Specification<User> gridSearch(Integer userId, String email, String firstName, String lastName) {
+    public Specification<User> gridSearch(Integer id, String email, String firstName, String lastName, Role role) {
         return (root, query, criteriaBuilder) -> {
 
             List<Predicate> predicates = new ArrayList<>();
 
-            if (userId != null) {
-                predicates.add(criteriaBuilder.equal(root.get("userId"), userId));
+            if (id != null) {
+                predicates.add(criteriaBuilder.equal(root.get("id"), id));
             }
 
             if (email != null && !email.isEmpty()) {
@@ -29,6 +31,10 @@ public class UserGridSearch {
 
             if (lastName != null && !lastName.isEmpty()) {
                 predicates.add(criteriaBuilder.like(root.get("lastName"), "%" + lastName + "%"));
+            }
+
+            if (role != null) {
+                predicates.add(criteriaBuilder.equal(root.get("role"), role));
             }
 
             query.orderBy(criteriaBuilder.asc(root.get("lastName")));

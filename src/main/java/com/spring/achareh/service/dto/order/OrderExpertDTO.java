@@ -1,5 +1,6 @@
 package com.spring.achareh.service.dto.order;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Getter
 @Setter
-public class OrderDTO {
+public class OrderExpertDTO {
     private Integer id;
 
     private String serviceName;

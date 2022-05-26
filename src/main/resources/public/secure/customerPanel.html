@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="fa">
-<head><title>پنل متخصصین</title>
+<head><title>پنل مشتریان</title>
     <meta charset="utf-8">
     <meta id="wz-viewport" name="viewport" content="width=device-width, user-scalable=0">
     <meta name="description" content="">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="robots" content="index,follow,noodp,noydir"/>
     <meta property="og:locale" content="fa-IR"/>
-    <meta property="og:title" content="پنل متخصصین"/>
+    <meta property="og:title" content="پنل مشتریان"/>
     <meta name='fontiran.com:license' content='B7G43'/>
     <meta name='fontiran.com:license' content='C6KGR'/>
     <link rel="stylesheet" type="text/css"
@@ -206,7 +206,7 @@
                 $('th').hide();
                 $("#resultTable,input,#wze142-wz-input,#wze141,#wze144,#wze156,#wze145,#wze157,#wze152,#wze151,#wze150").hide();
                 $.ajax({
-                    url: '../api/expert/account-balance',
+                    url: '../api/customer/account-balance',
                     method: 'GET',
                     success: function (i) {
                         $('#th1').show();
@@ -226,22 +226,26 @@
                 $('th').hide();
                 $("#resultTable,input,#wze142-wz-input,#wze141,#wze144,#wze156,#wze145,#wze157,#wze152,#wze151,#wze150").hide();
                 $.ajax({
-                    url: '../api/order/find-all-by-expert',
+                    url: '../api/order/find-all-by-customer',
                     method: 'GET',
                     success: function (list) {
-                        $('#th1,#th2,#th3,#th4,#th5').show();
+                        $('#th1,#th2,#th3,#th4,#th5,#th6,#th7').show();
                         $('#th1').html("نام سرویس");
-                        $('#th2').html("نام مشتری");
+                        $('#th2').html("نام متخصص");
                         $('#th3').html("توضیحات");
                         $('#th4').html("قیمت پیشنهادی");
-                        $('#th5').html("تاریخ");
+                        $('#th5').html("وضعیت سفارش");
+                        $('#th6').html("تاریخ ثبت");
+                        $('#th7').html("تاریخ انجام");
                         $.each(list, function (i) {
                             $('#resultTable').append("<tr class='wzc79-container-tableWrapper-table-tbody-tr wz-table-tboby-tr'>" +
                                 "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].serviceName + "</td>" +
-                                "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].customerFullName + "</td>" +
+                                "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].expertFullName + "</td>" +
                                 "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].description + "</td>" +
                                 "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].suggestionPrice + "</td>" +
-                                "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].date + "</td>" +
+                                "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].status + "</td>" +
+                                "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].submitDate + "</td>" +
+                                "<td class='wzc79-container-tableWrapper-table-tbody-tr-td wz-table-tbody-tr-td'>" + list[i].workDate + "</td>" +
                                 "</tr>").show();
                             $("input,#wze142-wz-input,#wze144,#wze159").show();
                         });
@@ -327,10 +331,10 @@
                                     <div id='wze148' class='wz-element responsive-menu' data-widget='wz-menu'>
                                         <div class='wzc70 wz-template'>
                                             <ul class="wzc70-list wz-menu wz-menu-horizontal wz-menu-rtl wz-menu-effect-opacity wz-menu-align-center wz-menu-fill wz-classic-menu">
-                                                <li class='' style=''><a id="menu1">انتخاب حوزه تخصصی</a></li>
-                                                <li class='' style=''><a id="menu2">ثبت پیشنهاد</a></li>
-                                                <li class='' style=''><a id="menu3">تاریخچه پیشنهادات</a></li>
-                                                <li class='' style=''><a id="menu4">نظرات</a></li>
+<!--                                                <li class='' style=''><a id="menu1">انتخاب حوزه تخصصی</a></li>-->
+<!--                                                <li class='' style=''><a id="menu2">ثبت پیشنهاد</a></li>-->
+<!--                                                <li class='' style=''><a id="menu3">تاریخچه پیشنهادات</a></li>-->
+<!--                                                <li class='' style=''><a id="menu4">نظرات</a></li>-->
                                                 <li class='' style=''><a id="menu5">کیف پول</a></li>
                                                 <li class='' style=''><a id="menu6">تاریخچه سفارشات</a></li>
                                             </ul>
@@ -442,6 +446,10 @@
                                                                 <span class='wzc79-container-tableWrapper-table-thead-tr-th-sort wz-table--sort-indicator'></span>
                                                             </th>
                                                             <th id="th6"
+                                                                class='wzc79-container-tableWrapper-table-thead-tr-th'>
+                                                                <span class='wzc79-container-tableWrapper-table-thead-tr-th-sort wz-table--sort-indicator'></span>
+                                                            </th>
+                                                            <th id="th7"
                                                                 class='wzc79-container-tableWrapper-table-thead-tr-th'>
                                                                 <span class='wzc79-container-tableWrapper-table-thead-tr-th-sort wz-table--sort-indicator'></span>
                                                             </th>

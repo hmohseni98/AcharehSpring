@@ -9,7 +9,8 @@ import com.spring.achareh.service.CustomerService;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.SpecialityService;
 import com.spring.achareh.service.base.BaseServiceImpl;
-import com.spring.achareh.service.dto.order.OrderDTO;
+import com.spring.achareh.service.dto.order.OrderCustomerDTO;
+import com.spring.achareh.service.dto.order.OrderExpertDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,10 +41,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
         return repository.findAllBySpeciality(speciality);
     }
 
-//    @Override
-//    public List<Order> findAllByExpert(Integer expertId) {
-//        return repository.findAllByExpert(expertId);
-//    }
+    @Override
+    public List<OrderExpertDTO> selectAllByExpert(Integer expertId) {
+        return repository.selectAllByExpert(expertId);
+    }
 
     @Override
     public List<Order> findAllByStatus(OrderStatus status) {
@@ -66,7 +67,12 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
     }
 
     @Override
-    public List<OrderDTO> selectAllByStatus() {
+    public List<OrderExpertDTO> selectAllByStatus() {
         return repository.selectAllByStatus(OrderStatus.waitingForExpertSuggestions);
+    }
+
+    @Override
+    public List<OrderCustomerDTO> selectAllByCustomer(Integer customerId) {
+        return repository.selectAllByCustomer(customerId);
     }
 }
