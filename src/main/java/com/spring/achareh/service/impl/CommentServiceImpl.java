@@ -1,16 +1,14 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.DoNotHaveAccessToThisOrder;
-import com.spring.achareh.customException.ScoreOutOfRange;
-import com.spring.achareh.customException.StatusOfThisOrderHasNotBeenPaid;
+import com.spring.achareh.exceptionHandler.customException.DoNotHaveAccessToThisOrderException;
+import com.spring.achareh.exceptionHandler.customException.ScoreOutOfRangeException;
+import com.spring.achareh.exceptionHandler.customException.OrderHasNotBeenPaidException;
 import com.spring.achareh.model.Comment;
-import com.spring.achareh.model.Customer;
-import com.spring.achareh.model.Expert;
-import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.OrderStatus;
 import com.spring.achareh.repository.CommentRepository;
 import com.spring.achareh.service.CommentService;
 import com.spring.achareh.service.base.BaseServiceImpl;
+import com.spring.achareh.service.dto.comment.CommentDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,20 +22,13 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Integer, Commen
     @Transactional
     @Override
     public void save(Comment comment) {
-        try {
-            if (!(comment.getOffer().getOrder().getCustomer().getId().equals(comment.getCustomer().getId()))){
-                throw new DoNotHaveAccessToThisOrder();
-            }
-            if (!(comment.getOffer().getOrder().getStatus().equals(OrderStatus.Paid))) {
-                throw new StatusOfThisOrderHasNotBeenPaid();
-            }
-            if (!(comment.getScore() > 0 && comment.getScore() < 6)){
-                throw new ScoreOutOfRange();
-            }
-            super.save(comment);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        if (!(comment.getOffer().getOrder().getCustomer().getId().equals(comment.getCustomer().getId())))
+            throw new DoNotHaveAccessToThisOrderException();
+        if (!(comment.getOffer().getOrder().getStatus().equals(OrderStatus.Paid)))
+            throw new OrderHasNotBeenPaidException();
+        if (!(comment.getScore() > 0 && comment.getScore() < 6))
+            throw new ScoreOutOfRangeException();
+        super.save(comment);
         super.save(comment);
     }
 
@@ -46,12 +37,7 @@ public class CommentServiceImpl extends BaseServiceImpl<Comment, Integer, Commen
     }
 
     @Override
-    public List<Comment> findAllByCustomer(Customer customer) {
-        return repository.findAllByCustomer(customer);
-    }
-
-    @Override
-    public List<Comment> findAllByService(Speciality speciality) {
-        return repository.findAllBySpeciality(speciality);
+    public List<CommentDTO> findAllByExpertId(Integer expertId) {
+        return repository.findAllByExpertId(expertId);
     }
 }

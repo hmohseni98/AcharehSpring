@@ -1,6 +1,9 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.*;
+import com.spring.achareh.exceptionHandler.customException.AccessDeniedException;
+import com.spring.achareh.exceptionHandler.customException.AccountNotActiveException;
+import com.spring.achareh.exceptionHandler.customException.DoNotHaveAccessToThisServiceException;
+import com.spring.achareh.exceptionHandler.customException.SuggestionPriceMustBeHigherThanTheBasePriceException;
 import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.Offer;
 import com.spring.achareh.model.Order;
@@ -34,26 +37,19 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
     @Transactional
     @Override
     public void offerRegister(Offer offer) {
-        try {
-            Expert expert = expertService.findById(offer.getExpert().getId()).get();
-            Order order = orderService.findById(offer.getOrder().getId()).get();
-            if(!expert.getStatus().equals(AccountStatus.active)){
-                throw new AccountNotActive();
-            }
-            if (!expert.getSpecialities().contains(order.getSpeciality())) {
-                throw new DoNotHaveAccessToThisService();
-            }
-            if (offer.getSuggestionPrice() < order.getSpeciality().getBasePrice()) {
-                throw new SuggestionPriceMustBeHigherThanTheBasePrice();
-            }
-            offer.setExpert(expert);
-            offer.setOrder(order);
-            repository.save(offer);
-            order.setStatus(OrderStatus.waitingExpertSelection);
-            orderService.save(order);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        Expert expert = expertService.findById(offer.getExpert().getId()).get();
+        Order order = orderService.findById(offer.getOrder().getId()).get();
+        if (!expert.getStatus().equals(AccountStatus.active))
+            throw new AccountNotActiveException();
+        if (!expert.getSpecialities().contains(order.getSpeciality()))
+            throw new DoNotHaveAccessToThisServiceException();
+        if (offer.getSuggestionPrice() < order.getSpeciality().getBasePrice())
+            throw new SuggestionPriceMustBeHigherThanTheBasePriceException();
+        offer.setExpert(expert);
+        offer.setOrder(order);
+        repository.save(offer);
+        order.setStatus(OrderStatus.waitingExpertSelection);
+        orderService.save(order);
     }
 
     @Transactional
@@ -61,16 +57,12 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
     public void selectOfferByCustomer(Integer offerId, Integer orderId) {
         Offer offer = repository.findById(offerId).get();
         Order order = orderService.findById(orderId).get();
-        try {
-            if (!order.getStatus().equals(OrderStatus.waitingExpertSelection)) {
-                throw new AccessDenied();
-            }
-            order.setAcceptOffer(offer);
-            order.setStatus(OrderStatus.dispatchOfAnExpert);
-            orderService.save(order);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+
+        if (!order.getStatus().equals(OrderStatus.waitingExpertSelection))
+            throw new AccessDeniedException();
+        order.setAcceptOffer(offer);
+        order.setStatus(OrderStatus.dispatchOfAnExpert);
+        orderService.save(order);
     }
 
 
@@ -87,6 +79,11 @@ public class OfferServiceImpl extends BaseServiceImpl<Offer, Integer, OfferRepos
             return repository.findAllOfferByOrderId(orderId, Sort.by("expertSuggestionPrice").ascending());
         }
         return repository.findAllOfferByOrderId(orderId, null);
+    }
+
+    @Override
+    public List<OfferDTO> findAllOfferByExpertId(Integer expertId) {
+        return repository.findAllOfferByExpertId(expertId);
     }
 
 

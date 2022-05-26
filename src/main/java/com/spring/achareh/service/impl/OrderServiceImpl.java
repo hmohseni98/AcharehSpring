@@ -1,7 +1,7 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.InvalidDate;
-import com.spring.achareh.customException.SuggestionPriceMustBeHigherThanTheBasePrice;
+import com.spring.achareh.exceptionHandler.customException.InvalidDateException;
+import com.spring.achareh.exceptionHandler.customException.SuggestionPriceMustBeHigherThanTheBasePriceException;
 import com.spring.achareh.model.*;
 import com.spring.achareh.model.enumration.OrderStatus;
 import com.spring.achareh.repository.OrderRepository;
@@ -40,10 +40,10 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
         return repository.findAllBySpeciality(speciality);
     }
 
-    @Override
-    public List<Order> findAllByExpert(Integer expertId) {
-        return repository.findAllByExpert(expertId);
-    }
+//    @Override
+//    public List<Order> findAllByExpert(Integer expertId) {
+//        return repository.findAllByExpert(expertId);
+//    }
 
     @Override
     public List<Order> findAllByStatus(OrderStatus status) {
@@ -53,21 +53,20 @@ public class OrderServiceImpl extends BaseServiceImpl<Order, Integer, OrderRepos
     @Transactional
     @Override
     public void orderRegister(Order order) {
-        try {
-            Customer customer = customerService.findById(order.getCustomer().getId()).get();
-            Speciality speciality = specialityService.findById(order.getSpeciality().getId()).get();
-            if (order.getSuggestionPrice() < speciality.getBasePrice()) {
-                throw new SuggestionPriceMustBeHigherThanTheBasePrice();
-            }
-            if (order.getWorkDate().isBefore(LocalDate.now())) {
-                throw new InvalidDate();
-            }
-            order.setCustomer(customer);
-            order.setSpeciality(speciality);
-            order.setStatus(OrderStatus.waitingForExpertSuggestions);
-            repository.save(order);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        Customer customer = customerService.findById(order.getCustomer().getId()).get();
+        Speciality speciality = specialityService.findById(order.getSpeciality().getId()).get();
+        if (order.getSuggestionPrice() < speciality.getBasePrice())
+            throw new SuggestionPriceMustBeHigherThanTheBasePriceException();
+        if (order.getWorkDate().isBefore(LocalDate.now()))
+            throw new InvalidDateException();
+        order.setCustomer(customer);
+        order.setSpeciality(speciality);
+        order.setStatus(OrderStatus.waitingForExpertSuggestions);
+        repository.save(order);
+    }
+
+    @Override
+    public List<OrderDTO> selectAllByStatus() {
+        return repository.selectAllByStatus(OrderStatus.waitingForExpertSuggestions);
     }
 }

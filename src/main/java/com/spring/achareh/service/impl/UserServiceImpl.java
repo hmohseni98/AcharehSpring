@@ -1,7 +1,8 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.OldPasswordIsIncorrect;
+import com.spring.achareh.exceptionHandler.customException.OldPasswordIsIncorrectException;
 import com.spring.achareh.model.User;
+import com.spring.achareh.model.enumration.Role;
 import com.spring.achareh.util.UserGridSearch;
 import com.spring.achareh.repository.UserRepository;
 import com.spring.achareh.service.UserService;
@@ -25,24 +26,28 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserReposito
     }
 
     @Override
-    public Boolean login(String email, String password) {
-        return repository.existsByEmailAndPassword(email, password);
+    public User login(String email, String password) {
+        return repository.findByEmailAndPassword(email, password);
     }
 
     @Override
     public void changePassword(Integer userId, String oldPassword, String newPassword) {
         User user = repository.findById(userId).get();
-        if (!user.getPassword().equals(oldPassword)) {
-            throw new OldPasswordIsIncorrect();
-        }
+        if (!user.getPassword().equals(oldPassword))
+            throw new OldPasswordIsIncorrectException();
         user.setPassword(newPassword);
         repository.save(user);
     }
 
     @Override
-    public List<User> gridSearch(Integer userId, String email, String firstName, String lastName) {
-        Specification<User> specification = userGridSearch.gridSearch(userId, email, firstName, lastName);
+    public List<User> gridSearch(Integer id, String email, String firstName, String lastName, Role role) {
+        Specification<User> specification = userGridSearch.gridSearch(id, email, firstName, lastName, role);
         return repository.findAll(specification);
+    }
+
+    @Override
+    public Boolean existsUserByEmail(String email) {
+        return repository.existsUserByEmail(email);
     }
 
 }

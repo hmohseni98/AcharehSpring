@@ -11,5 +11,7 @@ public interface OfferService extends BaseService<Offer, Integer> {
 
     List<OfferDTO> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore);
 
+    List<OfferDTO> findAllOfferByExpertId(Integer expertId);
+
     void selectOfferByCustomer(Integer offerId, Integer orderId);
 }

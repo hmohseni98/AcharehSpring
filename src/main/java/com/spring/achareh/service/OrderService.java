@@ -5,6 +5,8 @@ import com.spring.achareh.model.Order;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.enumration.OrderStatus;
 import com.spring.achareh.service.base.BaseService;
+import com.spring.achareh.service.dto.order.OrderDTO;
+
 import java.util.List;
 
 public interface OrderService extends BaseService<Order, Integer> {
@@ -12,9 +14,12 @@ public interface OrderService extends BaseService<Order, Integer> {
 
     List<Order> findAllBySpeciality(Speciality speciality);
 
-    List<Order> findAllByExpert(Integer expertId);
+//    List<Order> findAllByExpert(Integer expertId);
 
     List<Order> findAllByStatus(OrderStatus status);
 
     void orderRegister(Order order);
+
+    List<OrderDTO> selectAllByStatus();
+
 }

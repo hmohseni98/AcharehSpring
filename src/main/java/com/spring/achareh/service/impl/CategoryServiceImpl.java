@@ -13,4 +13,10 @@ public class CategoryServiceImpl extends BaseServiceImpl<Category, Integer, Cate
     public CategoryServiceImpl(CategoryRepository repository) {
         super(repository);
     }
+
+
+    @Override
+    public Category findByName(String name) {
+        return repository.findByName(name);
+    }
 }

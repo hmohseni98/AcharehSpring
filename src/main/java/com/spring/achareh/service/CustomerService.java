@@ -5,4 +5,6 @@ import com.spring.achareh.service.base.BaseService;
 
 public interface CustomerService extends BaseService<Customer, Integer> {
 
+    Customer findCustomerByEmail (String email);
+
 }

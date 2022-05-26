@@ -1,11 +1,14 @@
 package com.spring.achareh.service.impl;
 
-import com.spring.achareh.customException.ServiceNameAlreadyExist;
+import com.spring.achareh.exceptionHandler.customException.CategoryDoesNotExistException;
+import com.spring.achareh.exceptionHandler.customException.ServiceNameAlreadyExistException;
 import com.spring.achareh.model.Category;
 import com.spring.achareh.model.Speciality;
 import com.spring.achareh.repository.SpecialityRepository;
+import com.spring.achareh.service.CategoryService;
 import com.spring.achareh.service.SpecialityService;
 import com.spring.achareh.service.base.BaseServiceImpl;
+import com.spring.achareh.service.dto.speciality.SpecialityDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,21 +18,25 @@ import java.util.Set;
 @Service
 public class SpecialityServiceImpl extends BaseServiceImpl<Speciality, Integer, SpecialityRepository>
         implements SpecialityService {
-    public SpecialityServiceImpl(SpecialityRepository repository) {
+    private final CategoryService categoryService;
+
+    public SpecialityServiceImpl(SpecialityRepository repository, CategoryService categoryService) {
         super(repository);
+        this.categoryService = categoryService;
     }
 
     @Transactional
     @Override
     public void save(Speciality speciality) {
-        try {
-            super.save(speciality);
-            if (speciality.getId() == null)
-                throw new ServiceNameAlreadyExist();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+        Category category = categoryService.findByName(speciality.getCategory().getName());
+        if (category == null)
+            throw new CategoryDoesNotExistException();
+        speciality.setCategory(category);
+        super.save(speciality);
+        if (speciality.getId() == null)
+            throw new ServiceNameAlreadyExistException();
     }
+
 
     @Override
     public List<Speciality> findAllByCategory(Category category) {
@@ -39,5 +46,10 @@ public class SpecialityServiceImpl extends BaseServiceImpl<Speciality, Integer, 
     @Override
     public Set<Speciality> findSpecialityByExpertId(Integer expertId) {
         return repository.findSpecialityByExpertId(expertId);
+    }
+
+    @Override
+    public List<SpecialityDTO> selectAll() {
+        return repository.selectAll();
     }
 }
