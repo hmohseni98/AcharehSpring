@@ -1,7 +1,9 @@
 package com.spring.achareh.controller;
 
 import com.spring.achareh.exceptionHandler.customException.AccessDeniedException;
+import com.spring.achareh.model.Customer;
 import com.spring.achareh.model.Order;
+import com.spring.achareh.model.Speciality;
 import com.spring.achareh.model.User;
 import com.spring.achareh.service.OrderService;
 import com.spring.achareh.service.dto.order.OrderCustomerDTO;
@@ -29,14 +31,20 @@ public class OrderController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<Order> orderRegister(@Valid @ModelAttribute OrderRegisterDTO orderDTO) {
-        Order order = modelMapper.map(orderDTO, Order.class);
+    @ResponseStatus(HttpStatus.OK)
+    public void orderRegister(@RequestBody OrderRegisterDTO orderDTO) {
+        Customer customer = new Customer();
+        Speciality speciality = new Speciality();
+        Order order = new Order();
+        customer.setId(orderDTO.getCustomerId());
+        speciality.setId(orderDTO.getSpecialityId());
+        order.setCustomer(customer);
+        order.setSpeciality(speciality);
+        order.setDescription(orderDTO.getDescription());
+        order.setWorkDate(orderDTO.getWorkDate());
+        order.setSuggestionPrice(orderDTO.getSuggestionPrice());
+        order.setAddress(orderDTO.getAddress());
         orderService.orderRegister(order);
-        if (order.getId() != null) {
-            return ResponseEntity.ok().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
     }
 
     @GetMapping("/find-all")

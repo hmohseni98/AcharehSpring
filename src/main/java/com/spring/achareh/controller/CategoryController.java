@@ -27,7 +27,7 @@ public class CategoryController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public void save( String name) {
+    public void save(String name) {
         Category category = new Category(name);
         categoryService.save(category);
     }
