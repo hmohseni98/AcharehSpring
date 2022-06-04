@@ -8,6 +8,7 @@ import com.spring.achareh.service.dto.expert.ExpertRegisterDTO;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
@@ -21,10 +22,12 @@ import java.io.IOException;
 public class ExpertController {
     private final ExpertService expertService;
     private final ModelMapper modelMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public ExpertController(ExpertService expertService, ModelMapper modelMapper) {
+    public ExpertController(ExpertService expertService, ModelMapper modelMapper, BCryptPasswordEncoder passwordEncoder) {
         this.expertService = expertService;
         this.modelMapper = modelMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @PostMapping("/register")
@@ -32,6 +35,7 @@ public class ExpertController {
     public void save(@Valid @ModelAttribute ExpertRegisterDTO expertDTO) throws IOException {
         Expert expert = modelMapper.map(expertDTO, Expert.class);
         expert.setImage(expertDTO.getImage().getBytes());
+        expert.setPassword(passwordEncoder.encode(expert.getPassword()));
         expertService.save(expert);
     }
 
