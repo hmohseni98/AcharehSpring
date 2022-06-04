@@ -1,6 +1,6 @@
 <!doctype html>
-<html lang="fa">
-<head><title>آچاره - ثبت نام کاربر</title>
+<html lang="fa" prefix="og: http://ogp.me/ns#">
+<head><title>آچاره - ثبت نام متخصص</title>
     <meta charset="utf-8">
     <meta id="wz-viewport" name="viewport" content="width=device-width, user-scalable=0">
     <meta name="description" content="">
@@ -12,56 +12,53 @@
     <meta property="og:site_name" content=""/>
     <meta name='fontiran.com:license' content='B7G43'/>
     <meta name='fontiran.com:license' content='C6KGR'/>
-    <link rel="stylesheet" type="text/css"
-          href="css/jquery.toast.min.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="css/remodal.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="css/remodal-default-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.toast.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/remodal.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/remodal-default-theme.css"/>
     <link rel="stylesheet" type="text/css" href="https://webzi.ir/static/0.0.1/editor/css/base.css?ver=208"/>
-    <link rel="stylesheet" type="text/css" href="https://6285c741b06d6.mywebzi.ir/theme/css/style.css?ver=1652989659"/>
-    <link rel="stylesheet" type="text/css" href="https://6285c741b06d6.mywebzi.ir/theme/css/style.css?ver=1652989659"/>
+    <link rel="stylesheet" type="text/css" href="../css/style.css?ver=1652985837"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <style>.wz-loader-container {
-        position: fixed;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        top: 0;
-        z-index: 10000;
-        margin: auto;
-        background: #fff;
-    }
+    <style>
+        .wz-loader-container {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            top: 0;
+            z-index: 10000;
+            margin: auto;
+            background: #fff;
+        }
 
-    #message {
-        display: none;
-        color: #000;
-        position: relative;
-    }
+        #message {
+            display: none;
+            color: #000;
+            position: relative;
+        }
 
-    #message p {
-        font-size: 12px;
-    }
+        #message p {
+            font-size: 12px;
+        }
 
-    .valid {
-        color: green;
-    }
+        .valid {
+            color: green;
+        }
 
-    .valid:before {
-        position: relative;
-        left: -15px;
-        content: "✔";
-    }
+        .valid:before {
+            position: relative;
+            left: -15px;
+            content: "✔";
+        }
 
-    .invalid {
-        color: red;
-    }
+        .invalid {
+            color: red;
+        }
 
-    .invalid:before {
-        position: relative;
-        left: -15px;
-        content: "✖";
-    }
+        .invalid:before {
+            position: relative;
+            left: -15px;
+            content: "✖";
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', (event) => {
@@ -71,11 +68,13 @@
             var number = document.getElementById("number");
             var length = document.getElementById("length");
             var special = document.getElementById("special")
-            var button = document.getElementById("wze124")
-            var myFirstName = document.getElementById("wze118-wz-input")
-            var myLastName = document.getElementById("wze119-wz-input")
-            var myEmail = document.getElementById("wze120-wz-input")
+            var button = document.getElementById("wze105")
+
+            var myFirstName = document.getElementById("wze100-wz-input")
+            var myLastName = document.getElementById("wze101-wz-input")
+            var myEmail = document.getElementById("wze102-wz-input")
             var confirmMyInput = document.getElementById("psw-confirm");
+            var myImage = document.getElementById("wze107-wz-input");
 
             myInput.onfocus = function () {
                 document.getElementById("message").style.display = "block";
@@ -148,8 +147,8 @@
                     special.classList.add("invalid");
                 }
             }
-            myFirstName.onkeyup = (function (){
-                if (myFirstName.value.length < 3){
+            myFirstName.onkeyup = (function () {
+                if (myFirstName.value.length < 3) {
                     button.style.cssText += 'pointer-events:none';
                     $("#errorText").html("نام کوچک باید حداقل سه کاراکتر باشد");
                 } else {
@@ -157,8 +156,8 @@
                     $("#errorText").html("");
                 }
             });
-            myLastName.onkeyup = (function (){
-                if (myLastName.value.length < 3){
+            myLastName.onkeyup = (function () {
+                if (myLastName.value.length < 3) {
                     button.style.cssText += 'pointer-events:none';
                     $("#errorText").html("نام خانوادگی باید حداقل سه کاراکتر باشد");
                 } else {
@@ -166,12 +165,12 @@
                     $("#errorText").html("");
                 }
             });
-            myEmail.onkeyup = (function (){
-                var mail_format =/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-                if(myEmail.value.match(mail_format)){
+            myEmail.onkeyup = (function () {
+                var mail_format = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+                if (myEmail.value.match(mail_format)) {
                     button.style.cssText -= 'pointer-events:none';
                     $("#errorText").html("");
-                }else {
+                } else {
                     button.style.cssText += 'pointer-events:none';
                     $("#errorText").html("ایمیل وارد شده صحیح نمی باشد");
                 }
@@ -185,21 +184,51 @@
                     $("#errorText").html("رمز عبور و تکرار رمز عبور با هم مطابقت ندارد");
                 }
             });
-            $("#wze124").click(function () {
-                var firstName = $("#wze118-wz-input").val();
-                var lastName = $("#wze119-wz-input").val();
-                var email = $("#wze120-wz-input").val();
+
+            $("#wze105").click(async function () {
+                var firstName = $("#wze100-wz-input").val();
+                var lastName = $("#wze101-wz-input").val();
+                var email = $("#wze102-wz-input").val();
                 var password = $("#psw").val();
                 var confirmPassword = $("#psw-confirm").val();
+                var image = $("#wze107-wz-input").val();
+                const fi = document.getElementById('wze107-wz-input');
 
-                if (firstName == "" || lastName == "" || email == "" || password == "" || confirmPassword == "") {
+
+                if (firstName == "" || lastName == "" || email == "" || password == "" || confirmPassword == "" ||
+                    image.length <= 0) {
                     $("#errorText").html("فیلد ها نمیتوانند خالی باشند");
                     return false;
+                } else {
+                    $("#errorText").html("");
                 }
 
-                var getFirstName = $("#wze118-wz-input").val();
-                var getLastName = $("#wze119-wz-input").val();
-                var getEmail = $("#wze120-wz-input").val();
+                var fileInput = document.getElementById('wze107-wz-input');
+                var filePath = fileInput.value;
+                var allowedExtensions = /(\.jpg)$/i;
+                if (fi.files.length > 0) {
+                    if (!allowedExtensions.exec(filePath)) {
+                        $("#errorText").html("فقط فرمت jpg مجاز است");
+                        return false;
+                    }
+                }
+
+
+                if (fi.files.length > 0) {
+                    for (let i = 0; i <= fi.files.length - 1; i++) {
+                        const fsize = fi.files.item(i).size;
+                        const file = Math.round((fsize / 1024));
+                        if (file > 300) {
+                            $("#errorText").html("حجم عکس نمیتواند بیشتر از 300 کیلوبایت باشد");
+
+                            return false;
+                        }
+                    }
+                }
+
+                var getFirstName = $("#wze100-wz-input").val();
+                var getLastName = $("#wze101-wz-input").val();
+                var getEmail = $("#wze102-wz-input").val();
                 var getPassword = $("#psw").val();
 
                 var form = $('signup-form')[0];
@@ -209,9 +238,10 @@
                 formData.append('lastName',getLastName);
                 formData.append('email',getEmail);
                 formData.append('password',getPassword);
+                formData.append('image', $('input[type=file]')[0].files[0]);
 
                 $.ajax({
-                    url: '/api/customer/register',
+                    url: 'api/expert/register',
                     method: 'POST',
                     data: formData,
                     contentType: false,
@@ -225,7 +255,6 @@
                 });
             });
         })
-
         var mvp = document.getElementById('wz-viewport');
         if (screen.width < 1170 && screen.width > 768) {
             mvp.setAttribute('content', 'width=769, user-scalable=0');
@@ -234,7 +263,7 @@
         }
     </script>
 </head>
-<body data-width="1170" class="wz-production" data-page="p4">
+<body data-width="1170" class="wz-production" data-page="p3">
 <div class="wz-loader-container wz-loader-container-fix" style="display: block">
     <div class="sk-circle">
         <div class="sk-circle1 sk-child"></div>
@@ -259,12 +288,13 @@
                 <div class='wzc4 wz-template'>
                     <div class='wzc4-bg'></div>
                     <div class='wzc4-content wz-box-content wz-element-container'><a id='wze9' class='wz-element'
+                                                                                     data-widget='wz-button'
                                                                                      href='expertSignup.html'
                                                                                      target='_self'>
                         <div class='wzc47 wz-template'>
                             <div class='wzc47-bg'></div>
                             <span class='wzc47-content wz-element-content'>ثبت نام</span></div>
-                    </a><a id='wze10' class='wz-element'
+                    </a><a id='wze10' class='wz-element' data-widget='wz-button'
                            href='login.html' target='_self'>
                         <div class='wzc47 wz-template'>
                             <div class='wzc47-bg'></div>
@@ -274,7 +304,7 @@
                             <div class='wzc8 wz-template'>
                                 <div class='wzc8-frame'></div>
                                 <div class='wzc8-img'><img class='wzc8-img-inner'
-                                                           src="images/acharehLogo.png"/>
+                                                           src="../images/acharehLogo.png"/>
                                 </div>
                             </div>
                         </div>
@@ -286,62 +316,72 @@
     <div class='wz-section-full wzc-section-allPage-full'>
         <div id='wz-section-allPage' class='wz-section wzc-section-allPage'></div>
     </div>
-    <div class='wz-section-full wzc-section-wzs5-full'>
-        <div id='wz-section-wzs5' class='wz-section wzc-section-wzs5'>
-            <div id='wze114' class='wz-element' data-widget='wz-box' data-minheight='1' data-minwidth='1'>
+    <div class='wz-section-full wzc-section-wzs4-full'>
+        <div id='wz-section-wzs4' class='wz-section wzc-section-wzs4'>
+            <div id='wze74' class='wz-element' data-widget='wz-box' data-minheight='1' data-minwidth='1'>
                 <div class='wzc4 wz-template'>
                     <div class='wzc4-bg'></div>
-                    <div class='wzc4-content wz-box-content wz-element-container'><a id='wze115' class='wz-element'
-                                                                                     data-widget='wz-box'
-                                                                                     href='expertSignup.html'
+                    <div class='wzc4-content wz-box-content wz-element-container'><a id='wze92' class='wz-element'
+                                                                                     href='customerSignup.html'
                                                                                      target='_self' data-minheight='1'
                                                                                      data-minwidth='1'>
                         <div class='wzc48 wz-template'>
                             <div class='wzc48-bg'></div>
                             <div class='wzc48-content wz-box-content wz-element-container'>
-                                <div id='wze131' class='wz-element' data-widget='wz-text' data-handles='w, e'
+                                <div id='wze97' class='wz-element' data-widget='wz-text' data-handles='w, e'
                                      data-minwidth='10' wz-fix-line-height2 wz-autoheight>
                                     <div class='wzc28 wz-template'>
                                         <div class='wzc28-text wz-element-content'><h2 class="wz-font-h2" dir="rtl"
                                                                                        style="font-size: 21px; line-height: normal;">
-                                            <span style="color:#000000;"><span
+                                            <a target="_self" href="login.html"><span style="color:#000000;"><span
                                                     style="font-family:titr,tahoma,serif;"><span
-                                                    style="font-size:21px;">ثبت نام متخصص</span></span></span></h2>
+                                                    style="font-size:21px;">ثبت نام کاربر</span></span></span></a></h2>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </a>
-                        <div id='wze117' class='wz-element' data-handles='w, e'
+                        <div id='wze94' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
+                             wz-fix-line-height2 wz-autoheight>
+                            <div class='wzc28 wz-template'>
+                                <div class='wzc28-text wz-element-content'><h2 class="wz-font-h2" dir="rtl"
+                                                                               style="font-size: 21px; line-height: normal;">
+                                    <span style="color:#5f5f5f;"><span style="font-family:titr,tahoma,serif;"><span
+                                            style="font-size:21px;">ثبت نام متخصص</span></span></span></h2></div>
+                            </div>
+                        </div>
+                        <div id='wze99' class='wz-element' data-handles='w, e'
                              data-formname='ثبت نام'>
                             <div class='wzc63 wz-template'>
-                                <form id="signup-form"
+                                <form id='signup_form'
                                       class='wzc63-form wz-form-container, wz-element-container-prevent-new-element wz-element-container'>
-                                    <div id='wze118' class='wz-element'
+                                    <div id='wze100' class='wz-element' data-widget='wz-inputText'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
-                                            <div class='wzc54-container wz-inputText-container'><label
-                                                    class='wzc54-container-label wz-form-inputText-label'
-                                                    for='wze118-wz-input'>نام</label>
+                                            <div class='wzc54-container wz-inputText-container'>
+                                                <label
+                                                        class='wzc54-container-label wz-form-inputText-label'
+                                                        for='wze100-wz-input'>نام</label>
                                                 <input
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
-                                                        id='wze118-wz-input' name='wze118-wz-input' type='text'
+                                                        id='wze100-wz-input' name='wze100-wz-input' type='text'
                                                         placeholder='نام' value='' required wz-validate='required'
                                                         wz-validate-required='پر کردن این بخش الزامی است.'
                                                         wz-validate-message='ورودی نامعتبر است.'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze119' class='wz-element'
+                                    <div id='wze101' class='wz-element' data-widget='wz-inputText'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
-                                            <div class='wzc54-container wz-inputText-container'><label
-                                                    class='wzc54-container-label wz-form-inputText-label'
-                                                    for='wze119-wz-input'>نام خانوادگی</label>
+                                            <div class='wzc54-container wz-inputText-container'>
+                                                <label
+                                                        class='wzc54-container-label wz-form-inputText-label'
+                                                        for='wze101-wz-input'>نام خانوادگی</label>
                                                 <input
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
-                                                        id='wze119-wz-input' name='wze119-wz-input' type='text'
+                                                        id='wze101-wz-input' name='wze101-wz-input' type='text'
                                                         placeholder='نام خانوادگی' value='' required
                                                         wz-validate='required'
                                                         wz-validate-required='پر کردن این بخش الزامی است.'
@@ -349,15 +389,16 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze120' class='wz-element'
+                                    <div id='wze102' class='wz-element' data-widget='wz-inputText'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
-                                            <div class='wzc54-container wz-inputText-container'><label
-                                                    class='wzc54-container-label wz-form-inputText-label'
-                                                    for='wze120-wz-input'>پست الكترونيك</label>
+                                            <div class='wzc54-container wz-inputText-container'>
+                                                <label
+                                                        class='wzc54-container-label wz-form-inputText-label'
+                                                        for='wze102-wz-input'>پست الكترونيك</label>
                                                 <input
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
-                                                        id='wze120-wz-input' name='wze120-wz-input' type='text'
+                                                        id='wze102-wz-input' name='wze102-wz-input' type='text'
                                                         placeholder='پست الكترونيك' value='' required
                                                         wz-validate='email'
                                                         wz-validate-required='پر کردن این بخش الزامی است.'
@@ -365,7 +406,7 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze121' class='wz-element'
+                                    <div id='wze103' class='wz-element' data-widget='wz-inputText'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'>
@@ -374,16 +415,20 @@
                                                         for='psw'>رمز عبور</label>
                                                 <input
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
-                                                        id='psw' name='psw' type='password'
-                                                        placeholder='رمز عبور' value=''
+                                                        id='psw' name='wze103-wz-input' type='password'
+                                                        placeholder='رمز عبور' value='' required
                                                         wz-validate='password,required'
                                                         wz-validate-required='پر کردن این بخش الزامی است.'
-                                                        pattern="(?=.*[!@#$%^&*])(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-                                                        required/>
+                                                        wz-validate-message='ورودی نامعتبر است.'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <div id='wze122' class='wz-element'
+                                    <a id='wze105' class='wz-element' data-containment='parent'>
+                                        <div class='wzc65 wz-template'>
+                                            <div class='wzc65-bg'></div>
+                                            <span class='wzc65-content wz-element-content'>ثبت</span></div>
+                                    </a>
+                                    <div id='wze106' class='wz-element' data-widget='wz-inputText'
                                          data-containment='parent'>
                                         <div class='wzc54 wz-template'>
                                             <div class='wzc54-container wz-inputText-container'>
@@ -392,7 +437,7 @@
                                                         for='psw-confirm'>تکرار رمز عبور</label>
                                                 <input
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
-                                                        id='psw-confirm' name='wze122-wz-input' type='password'
+                                                        id='psw-confirm' name='wze106-wz-input' type='password'
                                                         placeholder='تکرار رمز عبور' value='' required
                                                         wz-validate='password,required'
                                                         wz-validate-required='پر کردن این بخش الزامی است.'
@@ -400,32 +445,39 @@
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
-                                    <a id='wze124' class='wz-element' data-containment='parent'>
-                                        <div class='wzc65 wz-template'>
-                                            <div class='wzc65-bg'></div>
-                                            <span class='wzc65-content wz-element-content'>ثبت</span></div>
-                                    </a></form>
+                                    <div id='wze107' class='wz-element' data-containment='parent'>
+                                        <div class='wzc66 wz-template'>
+                                            <div class='wzc66-container wz-uploadField-container'>
+                                                <input
+                                                        class='wzc66-container-input wz-form-uploadField wz-form-field'
+                                                        id='wze107-wz-input' name='wze107-wz-input'
+                                                        wz-validate='required'
+                                                        wz-validate-required='پر کردن این بخش الزامی است.' type='file'
+                                                        value='' accept='image/jpeg' required/>
+                                                <label
+                                                    class='wzc66-container-label wz-form-uploadField-label'
+                                                    for='wze107-wz-input'><span
+                                                    class='wzc66-container-label-icon upload-icon'><svg
+                                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path
+                                                    d="M259.257,0c-10.794,0-19.542,8.748-19.542,19.542v310.066c0,10.794,8.748,19.542,19.542,19.542 s19.542-8.748,19.542-19.542V19.542C278.799,8.748,270.051,0,259.257,0z"/> <path
+                                                    d="M380.73,106.224L272.598,5.257c-7.511-7.009-19.164-7.009-26.675,0L137.79,106.224 c-7.888,7.367-8.318,19.731-0.951,27.619c3.843,4.123,9.061,6.208,14.285,6.208c4.781,0,9.569-1.739,13.334-5.257l94.798-88.519 l94.798,88.519c7.901,7.367,20.258,6.937,27.619-0.951C389.035,125.955,388.618,113.591,380.73,106.224z"/> <path
+                                                    d="M454.677,166.758H350.453c-10.794,0-19.542,8.748-19.542,19.542c0,10.794,8.748,19.542,19.542,19.542h84.682v267.074 H76.865V205.842h84.682c10.794,0,19.542-8.748,19.542-19.542c0-10.794-8.748-19.542-19.542-19.542H57.323 c-10.794,0-19.542,8.748-19.542,19.542v306.158c0,10.794,8.748,19.542,19.542,19.542h397.354c10.794,0,19.542-8.748,19.542-19.542 V186.3C474.219,175.507,465.471,166.758,454.677,166.758z"/> </svg></span><span
+                                                    class='wzc66-container-label-text' aria-label='upload files'>بارگذاری عکس پرسنلی (محدودیت حجم 300 کیلوبایت)</span></label>
+                                                <p class='wzc66-container-message wz-form-inputText-message'></p></div>
+                                        </div>
+                                    </div>
+                                </form>
                                 <p id="errorText" style="direction: rtl;color: red"></p>
-                            </div>
-                        </div>
-                        <div id='wze130' class='wz-element' data-handles='w, e' data-minwidth='10'
-                             wz-fix-line-height2 wz-autoheight>
-                            <div class='wzc28 wz-template'>
-                                <div class='wzc28-text wz-element-content'><h2 class="wz-font-h2" dir="rtl"
-                                                                               style="font-size:21px;"><span
-                                        style="color:#666666;"><span style="font-size:21px;"><span
-                                        style="font-family:titr,tahoma, serif;">ثبت نام کاربر</span></span></span></h2>
-                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div id='wze126' class='wz-element' data-widget='wz-box' data-minheight='1' data-minwidth='1'>
+            <div id='wze110' class='wz-element' data-widget='wz-box' data-minheight='1' data-minwidth='1'>
                 <div class='wzc69 wz-template'>
                     <div class='wzc69-bg'></div>
                     <div class='wzc69-content wz-box-content wz-element-container'>
-                        <div id='wze127' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
+                        <div id='wze111' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
                              wz-fix-line-height2 wz-autoheight>
                             <div class='wzc28 wz-template'>
                                 <div class='wzc28-text wz-element-content'><p class="wz-font-p2" dir="rtl"
@@ -443,7 +495,7 @@
                                 <p id="special" class="invalid"><b>حروف خاص</b></p>
                             </div>
                         </div>
-                        <div id='wze128' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
+                        <div id='wze113' class='wz-element' data-widget='wz-text' data-handles='w, e' data-minwidth='10'
                              wz-fix-line-height2 wz-autoheight>
                             <div class='wzc28 wz-template'>
                                 <div class='wzc28-text wz-element-content'><h2 class="wz-font-h2" dir="rtl"
@@ -523,16 +575,12 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript"
-            src="js/jquery.min.js"></script>
-    <script type="text/javascript"
-            src="js/jquery.toast.min.js"></script>
-    <script type="text/javascript"
-            src="js/lodash.min.js"></script>
-    <script type="text/javascript"
-            src="js/remodal.min.js"></script>
-    <script type="text/javascript" src="https://webzi.ir/static/0.0.1/editor/js/frontBase.js?ver=208"></script>
-    <script type="text/javascript" src="https://6285c741b06d6.mywebzi.ir/theme/js/main.js?ver=1652989659"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="../js/lodash.min.js"></script>
+    <script type="text/javascript" src="../js/remodal.min.js"></script>
+    <script type="text/javascript" src="../js/frontBase.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
 </div>
 </body>
 </html>

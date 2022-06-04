@@ -10,11 +10,11 @@
     <meta property="og:type" content="website"/>
     <meta name='fontiran.com:license' content='B7G43'/>
     <meta name='fontiran.com:license' content='C6KGR'/>
-    <link rel="stylesheet" type="text/css" href="css/jquery.toast.min.css"/>
-    <link rel="stylesheet" type="text/css" href="css/remodal.css"/>
-    <link rel="stylesheet" type="text/css" href="css/remodal-default-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/jquery.toast.min.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/remodal.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/remodal-default-theme.css"/>
     <link rel="stylesheet" type="text/css" href="https://webzi.ir/static/0.0.1/editor/css/base.css?ver=208"/>
-    <link rel="stylesheet" type="text/css" href="css/loginStyle.css"/>
+    <link rel="stylesheet" type="text/css" href="../css/loginStyle.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <style>.wz-loader-container {
         position: fixed;
@@ -39,16 +39,15 @@
 
                 if (email != "" && password != "") {
                     $.ajax({
-                        url: 'api/user/login',
+                        url: 'login.html',
                         method: 'post',
                         data: form,
                         contentType: false,
                         processData: false,
                         success: function () {
-                            window.location = "index.html";
                         },
                         error: function (i) {
-                            $("#message").html(i.responseText);
+                            $("#message").html("نام کاربری یا رمز عبور اشتباه می باشد");
                         }
                     });
                 }
@@ -104,7 +103,7 @@
                             <div class='wzc8 wz-template'>
                                 <div class='wzc8-frame'></div>
                                 <div class='wzc8-img'><img class='wzc8-img-inner'
-                                                           src="images/acharehLogo.png"/>
+                                                           src="../images/acharehLogo.png"/>
                                 </div>
                             </div>
                         </div>
@@ -272,12 +271,12 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="js/jquery.min.js"></script>
-    <script type="text/javascript" src="js/jquery.toast.min.js"></script>
-    <script type="text/javascript" src="js/lodash.min.js"></script>
-    <script type="text/javascript" src="js/remodal.min.js"></script>
-    <script type="text/javascript" src="js/frontBase.js"></script>
-    <script type="text/javascript" src="js/main.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.toast.min.js"></script>
+    <script type="text/javascript" src="../js/lodash.min.js"></script>
+    <script type="text/javascript" src="../js/remodal.min.js"></script>
+    <script type="text/javascript" src="../js/frontBase.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
 </div>
 </body>
 </html>
