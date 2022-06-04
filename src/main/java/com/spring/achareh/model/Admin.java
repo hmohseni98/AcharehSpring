@@ -15,21 +15,10 @@ import java.time.LocalDateTime;
 @Entity
 public class Admin extends User {
 
-    @Builder()
-    public Admin(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role) {
-        super(firstName, lastName, email, password, registerDataTime, role);
-    }
 
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "id='" + super.getId() + '\'' +
-                ", firstName='" + super.getFirstName() + '\'' +
-                ", lastName='" + super.getLastName() + '\'' +
-                ", email='" + super.getEmail() + '\'' +
-                ", password='" + super.getPassword() + '\'' +
-                ", registerData=" + super.getRegisterDataTime() +
-                '}';
+    @Builder
+    public Admin(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, Boolean expired, Boolean locked, Boolean credentialsExpired, Boolean enabled) {
+        super(firstName, lastName, email, password, registerDataTime, role, expired, locked, credentialsExpired, enabled);
     }
 
 }

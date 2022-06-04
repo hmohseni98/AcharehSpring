@@ -34,30 +34,13 @@ public class Expert extends User {
     public Expert(){}
 
     @Builder
-    public Expert(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, AccountStatus status, byte[] image, Set<Speciality> specialities, Integer balance, Integer averageScore) {
-        super(firstName, lastName, email, password, registerDataTime, role);
+    public Expert(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, Boolean expired, Boolean locked, Boolean credentialsExpired, Boolean enabled, AccountStatus status, byte[] image, Set<Speciality> specialities, Integer balance, Integer averageScore) {
+        super(firstName, lastName, email, password, registerDataTime, role, expired, locked, credentialsExpired, enabled);
         this.status = status;
         this.image = image;
         this.specialities = specialities;
         this.balance = balance;
         this.averageScore = averageScore;
     }
-
-    @Override
-    public String toString() {
-        return "Expert{" +
-                "firstName='" + super.getFirstName() + '\'' +
-                ", lastName='" + super.getLastName() + '\'' +
-                ", email='" + super.getEmail() + '\'' +
-                ", password='" + super.getPassword() + '\'' +
-                ", registerDataTime=" + super.getRegisterDataTime() +
-                ", status=" + status +
-                ", image=" + image +
-                ", specialities=" + specialities +
-                ", balance=" + balance +
-                ", averageScore=" + averageScore +
-                '}';
-    }
-
 }
 
