@@ -27,6 +27,10 @@ public class AdminServiceImpl extends BaseServiceImpl<Admin, Integer, AdminRepos
         if (userService.existsUserByEmail(admin.getEmail()))
             throw new EmailAlreadyExistException();
         admin.setRole(Role.Admin);
+        admin.setEnabled(true);
+        admin.setExpired(false);
+        admin.setCredentialsExpired(false);
+        admin.setLocked(false);
         super.save(admin);
     }
 }

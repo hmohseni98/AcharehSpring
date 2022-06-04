@@ -26,6 +26,10 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Integer, Cust
             throw new EmailAlreadyExistException();
         customer.setRole(Role.Customer);
         customer.setBalance(0);
+        customer.setEnabled(true);
+        customer.setExpired(false);
+        customer.setCredentialsExpired(false);
+        customer.setLocked(false);
         super.save(customer);
     }
 

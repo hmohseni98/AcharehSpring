@@ -39,6 +39,10 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
         expert.setRole(Role.Expert);
         expert.setAverageScore(0);
         expert.setBalance(0);
+        expert.setEnabled(true);
+        expert.setExpired(false);
+        expert.setCredentialsExpired(false);
+        expert.setLocked(false);
         super.save(expert);
     }
 
