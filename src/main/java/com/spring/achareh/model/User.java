@@ -9,6 +9,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,6 +24,8 @@ import java.util.List;
 @Table(name = "users")
 @Entity
 public abstract class User extends BaseEntity<Integer> implements UserDetails {
+    private static final long OTP_VALID_DURATION = 3 * 60 * 1000;
+
     @Column(name = "first_name", columnDefinition = "varchar(30)")
     private String firstName;
     @Column(name = "last_name", columnDefinition = "varchar(50)")
@@ -35,6 +38,10 @@ public abstract class User extends BaseEntity<Integer> implements UserDetails {
     private LocalDateTime registerDataTime;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @Column(name = "one_time_password")
+    private String oneTimePassword;
+    @Column(name = "otp_requested_time")
+    private Date otpRequestedTime;
     private Boolean expired;
     private Boolean locked;
     private Boolean credentialsExpired;
@@ -70,5 +77,20 @@ public abstract class User extends BaseEntity<Integer> implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public boolean isOTPRequired() {
+        if (this.getOneTimePassword() == null) {
+            return false;
+        }
+
+        long currentTimeInMillis = System.currentTimeMillis();
+        long otpRequestedTimeInMillis = this.otpRequestedTime.getTime();
+
+        if (otpRequestedTimeInMillis + OTP_VALID_DURATION < currentTimeInMillis) {
+            return false;
+        }
+
+        return true;
     }
 }

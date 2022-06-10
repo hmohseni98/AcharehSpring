@@ -7,6 +7,7 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -34,8 +35,8 @@ public class Expert extends User {
     public Expert(){}
 
     @Builder
-    public Expert(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, Boolean expired, Boolean locked, Boolean credentialsExpired, Boolean enabled, AccountStatus status, byte[] image, Set<Speciality> specialities, Integer balance, Integer averageScore) {
-        super(firstName, lastName, email, password, registerDataTime, role, expired, locked, credentialsExpired, enabled);
+    public Expert(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, String oneTimePassword, Date otpRequestedTime, Boolean expired, Boolean locked, Boolean credentialsExpired, Boolean enabled, AccountStatus status, byte[] image, Set<Speciality> specialities, Integer balance, Integer averageScore) {
+        super(firstName, lastName, email, password, registerDataTime, role, oneTimePassword, otpRequestedTime, expired, locked, credentialsExpired, enabled);
         this.status = status;
         this.image = image;
         this.specialities = specialities;

@@ -29,22 +29,23 @@
     <script>
         $(Document).ready(function () {
             $("#wze63").click(function () {
-                var email = $("#wze56-wz-input").val();
-                var password = $("#wze58-wz-input").val();
+                var username = $("#username").val();
+                var password = $("#password").val();
 
                 var form = new FormData();
 
-                form.append('email', email);
+                form.append('username', username);
                 form.append('password', password);
 
-                if (email != "" && password != "") {
+                if (username != "" && password != "") {
                     $.ajax({
                         url: 'login.html',
                         method: 'post',
                         data: form,
                         contentType: false,
                         processData: false,
-                        success: function () {
+                        success: function (i) {
+                            window.location = "../index.html";
                         },
                         error: function (i) {
                             $("#message").html("نام کاربری یا رمز عبور اشتباه می باشد");
@@ -130,9 +131,9 @@
                                         <div class='wzc46 wz-template'>
                                             <div class='wzc46-container wz-inputText-container'><label
                                                     class='wzc46-container-label wz-form-inputText-label'
-                                                    for='wze56-wz-input'>نام کاربری (پست الکترونیک)</label>
+                                                    for='username'>نام کاربری (پست الکترونیک)</label>
                                                 <input class='wzc46-container-input wz-form-inputText wz-form-field'
-                                                       id='wze56-wz-input' name='wze56-wz-input' type='text'
+                                                       id='username' name='username' type='text'
                                                        placeholder='نام کاربری (پست الکترونیک)' value='' required
                                                        wz-validate='email,required'
                                                        wz-validate-required='پر کردن این بخش الزامی است.'
@@ -145,9 +146,9 @@
                                         <div class='wzc44 wz-template'>
                                             <div class='wzc44-container wz-inputText-container'><label
                                                     class='wzc44-container-label wz-form-inputText-label'
-                                                    for='wze58-wz-input'>رمز عبور</label>
+                                                    for='password'>رمز عبور</label>
                                                 <input class='wzc44-container-input wz-form-inputText wz-form-field'
-                                                       id='wze58-wz-input' name='wze58-wz-input' type='password'
+                                                       id='password' name='password' type='password'
                                                        placeholder='رمز عبور' value='' required
                                                        wz-validate='password,required'
                                                        wz-validate-required='پر کردن این بخش الزامی است.'

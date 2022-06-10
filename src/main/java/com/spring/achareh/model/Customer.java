@@ -6,6 +6,7 @@ import lombok.*;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.time.LocalDateTime;
+import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,8 +18,9 @@ public class Customer extends User {
     private Integer balance;
 
     @Builder
-    public Customer(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, Boolean expired, Boolean locked, Boolean credentialsExpired, Boolean enabled, Integer balance) {
-        super(firstName, lastName, email, password, registerDataTime, role, expired, locked, credentialsExpired, enabled);
+
+    public Customer(String firstName, String lastName, String email, String password, LocalDateTime registerDataTime, Role role, String oneTimePassword, Date otpRequestedTime, Boolean expired, Boolean locked, Boolean credentialsExpired, Boolean enabled, Integer balance) {
+        super(firstName, lastName, email, password, registerDataTime, role, oneTimePassword, otpRequestedTime, expired, locked, credentialsExpired, enabled);
         this.balance = balance;
     }
 }

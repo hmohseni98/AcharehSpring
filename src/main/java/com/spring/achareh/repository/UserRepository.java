@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User,Integer>,JpaSpecificationExecutor<User> {
@@ -15,4 +16,7 @@ public interface UserRepository extends JpaRepository<User,Integer>,JpaSpecifica
     List<User> findAll(Specification<User> specification);
 
     Boolean existsUserByEmail(String email);
+
+    Optional<User> findByEmail(String email);
+
 }

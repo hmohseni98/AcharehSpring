@@ -4,6 +4,8 @@ import com.spring.achareh.model.User;
 import com.spring.achareh.model.enumration.Role;
 import com.spring.achareh.service.base.BaseService;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public interface UserService extends BaseService<User,Integer> {
@@ -16,4 +18,9 @@ public interface UserService extends BaseService<User,Integer> {
 
     Boolean existsUserByEmail(String email);
 
+    void generateOneTimePassword(User user) throws MessagingException, UnsupportedEncodingException;
+
+    void sendOTPEmail(User user, String OTP) throws MessagingException, UnsupportedEncodingException;
+
+    void clearOTP(User user);
 }
