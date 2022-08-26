@@ -37,7 +37,7 @@ public class UserGridSearch {
                 predicates.add(criteriaBuilder.equal(root.get("role"), role));
             }
 
-            query.orderBy(criteriaBuilder.asc(root.get("lastName")));
+            //query.orderBy(criteriaBuilder.asc(root.get("id")));
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
     }

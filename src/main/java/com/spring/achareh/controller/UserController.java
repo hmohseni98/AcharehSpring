@@ -5,7 +5,11 @@ import com.spring.achareh.model.User;
 import com.spring.achareh.model.enumration.Role;
 import com.spring.achareh.service.UserService;
 import com.spring.achareh.service.dto.user.UserDTO;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MappingContext;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
 
 @RestController
 @CrossOrigin
@@ -54,19 +59,31 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/gridSearch")
+    @GetMapping("/gridSearch")
+    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public List<UserDTO> gridSearch(Integer id, String firstName, String lastName, String email, String userType) {
+    public Page<UserDTO> gridSearch(@RequestParam(required = false) Integer id, @RequestParam String firstName, @RequestParam String lastName,
+                                    @RequestParam String email, @RequestParam String userType, @RequestParam Integer pageNo,
+                                    @RequestParam Integer pageSize, @RequestParam String sortingField,
+                                    @RequestParam String sortingDirection) {
         Role role;
         if (userType.equals("متخصص")) {
             role = Role.Expert;
         } else if (userType.equals("مشتری")) {
             role = Role.Customer;
+        } else if (userType.equals("مدیر")) {
+            role = Role.Admin;
         } else
             role = null;
-        List<UserDTO> userDTOList = new ArrayList<>();
-        userService.gridSearch(id, email, firstName, lastName, role).
-                forEach(user -> userDTOList.add(modelMapper.map(user, UserDTO.class)));
-        return userDTOList;
+
+        Page<User> userPage = userService.gridSearch(id, email, firstName, lastName, role, pageNo, pageSize,
+                sortingField, sortingDirection);
+        Page<UserDTO> userDTOPage = userPage.map(new Function<User, UserDTO>() {
+            @Override
+            public UserDTO apply(User user) {
+                return new ModelMapper().map(user,UserDTO.class);
+            }
+        });
+        return userDTOPage;
     }
 }

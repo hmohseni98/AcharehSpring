@@ -29,181 +29,6 @@
             background: #fff;
         }
     </style>
-    <script>
-        $(document).ready(function () {
-            $("#resultTable,input,#wze142-wz-input,#wze141,#wze144,#wze145").hide();
-
-
-            $("#userSearch").click(function () {
-                $("input,#wze142-wz-input,#wze141").show();
-                $("#wze144,#wze145").hide();
-                $("#wze136-wz-input").attr("placeholder", "ایدی کاربر").val('');
-                $("#firstName").attr("placeholder", "نام").val('');
-                $("#wze139-wz-input").attr("placeholder", "نام خانوادگی").val('');
-                $("#wze137-wz-input").attr("placeholder", "پست الکترونیک").val('');
-                $('td,th').hide()
-                $("#wze141").click(function () {
-                    $('td').remove();
-                    var formData = new FormData();
-
-                    var id = $('#wze136-wz-input').val();
-                    var firstName = $('#firstName').val();
-                    var lastName = $('#wze139-wz-input').val();
-                    var email = $('#wze137-wz-input').val();
-                    var userType = $('#wze142-wz-input').val();
-
-                    formData.append('id', id);
-                    formData.append('firstName', firstName);
-                    formData.append('lastName', lastName);
-                    formData.append('email', email);
-                    formData.append('userType', userType);
-                    var dataList = [];
-
-                    $.ajax({
-                        url: '/api/user/gridSearch',
-                        method: 'POST',
-                        data: formData,
-                        contentType: false,
-                        processData: false,
-                        success: function (list) {
-                            $.each(list, function (i) {
-                                $('#resultTable').append("<tr>" +
-                                    "<td>" + list[i].id + "</td>" +
-                                    "<td>" + list[i].firstName + "</td>" +
-                                    "<td>" + list[i].lastName + "</td>" +
-                                    "<td>" + list[i].email + "</td>" +
-                                    "<td>" + list[i].role + "</td>" +
-                                    "</tr>").show();
-                                $('td,th').show();
-                                $('#th3').html("نام خانوادگی");
-                                $('#th4').html("ایمیل");
-                                $('#th5').html("نوع کاربر");
-                            });
-                        },
-                        error: function (i) {
-                            alert("Error: " + i.responseText);
-                        }
-                    });
-                })
-            });
-
-            $('#defineService').click(function () {
-                $('tr').remove();
-                $("#resultTable,input,#wze142-wz-input,#wze141,#wze144").hide();
-                $('#wze145,#wze137-wz-input').show();
-                $("#wze137-wz-input").attr("placeholder", "نام خدمت").val('');
-                $.ajax({
-                    url: '../api/category/findAll',
-                    method: 'GET',
-                    success: function (list) {
-                        $.each(list, function (i) {
-                            $('#resultTable').append("<tr>" +
-                                "<td>" + list[i].id + "</td>" +
-                                "<td>" + list[i].name + "</td>" +
-                                "</tr>").show();
-                            $('#th1,#th2').show();
-                            $('#th3,#th4,#th5').hide();
-
-                        });
-                    },
-                    error: function (i) {
-                        alert("Error: "  + i.responseText);
-                    }
-                });
-            });
-
-            $("#wze145").click(function () {
-
-                var getCategoryName = $('#wze137-wz-input').val().trim();
-
-                $.ajax({
-                    url: '../api/category/register',
-                    type: 'POST',
-                    cache: false,
-                    data: {name: getCategoryName},
-                    success: function () {
-                        getCategoryName.val('')
-                    },
-                    error: function (i) {
-                        alert("Error: "  + i.responseText);
-                    }
-                });
-
-            });
-
-            $('#defineSubService').click(function () {
-                $('td').hide();
-                $("#resultTable,input,#wze142-wz-input,#wze141,#wze144,#wze145").hide();
-                $.ajax({
-                    url: '../api/speciality/findAll',
-                    method: 'GET',
-                    success: function (list) {
-                        $('#th3,#th4,#th5').show()
-                        $('#th3').html("قیمت پایه");
-                        $('#th4').html("توضیحات");
-                        $('#th5').html("نام خدمت");
-                        $.each(list, function (i) {
-                            $('#resultTable').append("<tr>" +
-                                "<td>" + list[i].id + "</td>" +
-                                "<td>" + list[i].name + "</td>" +
-                                "<td>" + list[i].basePrice + "</td>" +
-                                "<td>" + list[i].description + "</td>" +
-                                "<td>" + list[i].categoryName + "</td>" +
-                                "</tr>").show();
-                            $("input,#wze142-wz-input,#wze144").show();
-                            $("#wze136-wz-input").attr("placeholder", "نام زیر خدمت").val('')
-                            $("#firstName").attr("placeholder", "قیمت پایه").val('');
-                            $("#wze139-wz-input").attr("placeholder", "توضیحات").val('');
-                            $("#wze137-wz-input").attr("placeholder", "نام خدمت").val('');
-                            $("#wze142-wz-input").hide();
-                        });
-                    },
-                    error: function (i) {
-                        alert("Error: "  + i.responseText);
-                    }
-                });
-            });
-
-            $("#wze144").click(function () {
-
-                var formData = new FormData();
-
-                var getName = $('#wze136-wz-input').val();
-                var basePrice = $('#firstName').val();
-                var description = $('#wze139-wz-input').val();
-                var categoryName = $('#wze137-wz-input').val();
-
-                formData.append('name', getName);
-                formData.append('basePrice', basePrice);
-                formData.append('description', description);
-                formData.append('categoryName', categoryName);
-
-                $.ajax({
-                    url: '../api/speciality/register',
-                    method: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    success: function () {
-                        getName.val('');
-                        basePrice.val('');
-                        description.val('');
-                        categoryName.val('');
-                    },
-                    error: function (i) {
-                        alert("Error: "  + i.responseText);
-                    }
-                });
-            });
-        });
-
-        var mvp = document.getElementById('wz-viewport');
-        if (screen.width < 1170 && screen.width > 768) {
-            mvp.setAttribute('content', 'width=769, user-scalable=0');
-        } else if (screen.width < 768) {
-            mvp.setAttribute('content', 'width=468, user-scalable=0');
-        }
-    </script>
 </head>
 <body data-width="1170" class="wz-production" data-page="p5">
 <div class="wz-loader-container wz-loader-container-fix" style="display: block">
@@ -375,6 +200,9 @@
                                                             value='مشتری'>مشتری
                                                     </option>
                                                     <option class='wzc75-container-input-item wz-form-choices'
+                                                            value='مدیر'>مدیر
+                                                    </option>
+                                                    <option class='wzc75-container-input-item wz-form-choices'
                                                             value='همه'>همه
                                                     </option>
                                                 </select>
@@ -388,7 +216,6 @@
                                         <div class='wzc4 wz-template'>
                                             <div class='wzc4-bg'>
                                                 <table id="resultTable" class="table table-striped">
-                                                    <thead>
                                                     <tr>
                                                         <th scope="col" id="th1">ایدی</th>
                                                         <th scope="col" id="th2">نام</th>
@@ -396,11 +223,12 @@
                                                         <th scope="col" id="th4">ایمیل</th>
                                                         <th scope="col" id="th5">نوع کاربر</th>
                                                     </tr>
-                                                    </thead>
-                                                    <tbody>
                                                 </table>
                                             </div>
-                                            <div class='wzc4-content wz-box-content wz-element-container'></div>
+                                            <div id="pageable_div"
+                                                 class='wzc4-content wz-box-content wz-element-container'
+                                                 style="">
+                                            </div>
                                         </div>
                                     </div>
                                     <a id='wze144' class='wz-element' data-containment='parent'>
@@ -491,6 +319,224 @@
     <script type="text/javascript" src="../../js/lodash.min.js"></script>
     <script type="text/javascript" src="../../js/remodal.min.js"></script>
     <script type="text/javascript" src="../../js/frontBase.js"></script>
-    <script type="text/javascript" src="../../js/main.js"></script></div>
+    <script type="text/javascript" src="../../js/main.js"></script>
+</div>
+<script>
+
+    var pageNumber = 0 , defaultPageSize = 10, defaultSortingField = 'id', defaultSortingDirection = 'DESC';
+    var previousPage, nextPage, sortingDirection = 'DESC', sortingField = 'id', currentPage;
+
+    function displayPageable(pageable, totalElements, totalPages) {
+        previousPage = pageable.pageNumber - 1;
+        if (previousPage < 0) {
+            previousPage = 0;
+        }
+        nextPage = pageable.pageNumber + 1;
+        if (nextPage > totalPages) {
+            nextPage = totalPages;
+        }
+        var html = '<button style="margin-top: 450px;margin-left: 500px" onclick="getUser(\'' + previousPage + '\',\'' + defaultSortingField + '\',\'' + defaultSortingDirection + '\')">Previous</button>' +
+            '<button onclick="getUser(\'' + nextPage + '\',\'' + defaultSortingField + '\',\'' + defaultSortingDirection + '\')">Next</button>' +
+            '<br><span style="margin-left: 500px">' + pageable.offset + ' of ' + totalElements + ' elements</span>';
+        document.getElementById("pageable_div").innerHTML = html;
+    }
+
+
+    function getUser(page , sortingField, sortingDirection) {
+        $('td').remove();
+        var id = $('#wze136-wz-input').val();
+        var firstName = $('#firstName').val();
+        var lastName = $('#wze139-wz-input').val();
+        var email = $('#wze137-wz-input').val();
+        var userType = $('#wze142-wz-input').val();
+        var pageSi = null;
+
+        if (page == null) {
+            page = pageNumber;
+        }
+        if (pageSi == null){
+            pageSi = defaultPageSize;
+        }
+        if (sortingField == null) {
+            sortingField = defaultSortingField;
+        }
+        if (sortingDirection == null) {
+            sortingDirection = defaultSortingDirection
+        }
+
+        $.ajax({
+            url: '/api/user/gridSearch',
+            method: 'GET',
+            data: {
+                id: id,
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                userType: userType,
+                pageNo: page,
+                pageSize: pageSi,
+                sortingField:sortingField,
+                sortingDirection:sortingDirection,
+            },
+            cache: false,
+            success: function (response) {
+                $.each(response.content, (i, row) => {
+                    $('#resultTable').append("<tr>" +
+                        "<td>" + row.id + "</td>" +
+                        "<td>" + row.firstName + "</td>" +
+                        "<td>" + row.lastName + "</td>" +
+                        "<td>" + row.email + "</td>" +
+                        "<td>" + row.role + "</td>" +
+                        "</tr>").show();
+                });
+                $('td,th').show();
+                $('#th3').html("نام خانوادگی");
+                $('#th4').html("ایمیل");
+                $('#th5').html("نوع کاربر");
+                displayPageable(response.pageable, response.totalElements, response.totalPages);
+                console.log("total pageable:" + response.pageable);
+                console.log("total elements" + response.totalElements);
+                console.log("tatal pages" + response.totalPages);
+                currentPage = response.number;
+                console.log("number" + response.number);
+            },
+            error: function (i) {
+                alert("Error: " + i.responseText);
+            }
+        });
+    };
+
+
+    $("#resultTable,input,#wze142-wz-input,#wze141,#wze144,#wze145").hide();
+
+    $("#userSearch").click(function () {
+        $("input,#wze142-wz-input,#wze141").show();
+        $("#wze144,#wze145").hide();
+        $("#wze136-wz-input").attr("placeholder", "ایدی کاربر").val('');
+        $("#firstName").attr("placeholder", "نام").val('');
+        $("#wze139-wz-input").attr("placeholder", "نام خانوادگی").val('');
+        $("#wze137-wz-input").attr("placeholder", "پست الکترونیک").val('');
+        $('td,th').hide()
+
+        $("#wze141").click(function () {
+            getUser();
+        });
+    });
+
+    $('#defineService').click(function () {
+        $('td').remove();
+        $("#resultTable,input,#wze142-wz-input,#wze141,#wze144").hide();
+        $('#wze145,#wze137-wz-input').show();
+        $("#wze137-wz-input").attr("placeholder", "نام خدمت").val('');
+        $.ajax({
+            url: '/api/category/findAll',
+            method: 'GET',
+            success: function (list) {
+                $.each(list, function (i) {
+                    $('#resultTable').append("<tr>" +
+                        "<td>" + list[i].id + "</td>" +
+                        "<td>" + list[i].name + "</td>" +
+                        "</tr>").show();
+                });
+                $('#th1,#th2').show();
+                $('#th3,#th4,#th5').hide();
+            },
+            error: function (i) {
+                alert("Error: " + i.responseText);
+            }
+        });
+    });
+
+    $("#wze145").click(function () {
+
+        var getCategoryName = $('#wze137-wz-input').val().trim();
+
+        $.ajax({
+            url: '/api/category/register',
+            type: 'POST',
+            cache: false,
+            data: {name: getCategoryName},
+            success: function () {
+                getCategoryName.val('')
+            },
+            error: function (i) {
+                alert("Error: " + i.responseText);
+            }
+        });
+
+    });
+
+    $('#defineSubService').click(function () {
+        $('td').hide();
+        $("#resultTable,input,#wze142-wz-input,#wze141,#wze144,#wze145").hide();
+        $.ajax({
+            url: '/api/speciality/findAll',
+            method: 'GET',
+            success: function (list) {
+                $('#th3,#th4,#th5').show()
+                $('#th3').html("قیمت پایه");
+                $('#th4').html("توضیحات");
+                $('#th5').html("نام خدمت");
+                $.each(list, function (i) {
+                    $('#resultTable').append("<tr>" +
+                        "<td>" + list[i].id + "</td>" +
+                        "<td>" + list[i].name + "</td>" +
+                        "<td>" + list[i].basePrice + "</td>" +
+                        "<td>" + list[i].description + "</td>" +
+                        "<td>" + list[i].categoryName + "</td>" +
+                        "</tr>").show();
+                    $("input,#wze142-wz-input,#wze144").show();
+                    $("#wze136-wz-input").attr("placeholder", "نام زیر خدمت").val('')
+                    $("#firstName").attr("placeholder", "قیمت پایه").val('');
+                    $("#wze139-wz-input").attr("placeholder", "توضیحات").val('');
+                    $("#wze137-wz-input").attr("placeholder", "نام خدمت").val('');
+                    $("#wze142-wz-input").hide();
+                });
+            },
+            error: function (i) {
+                alert("Error: " + i.responseText);
+            }
+        });
+    });
+
+    $("#wze144").click(function () {
+
+        var formData = new FormData();
+
+        var getName = $('#wze136-wz-input').val();
+        var basePrice = $('#firstName').val();
+        var description = $('#wze139-wz-input').val();
+        var categoryName = $('#wze137-wz-input').val();
+
+        formData.append('name', getName);
+        formData.append('basePrice', basePrice);
+        formData.append('description', description);
+        formData.append('categoryName', categoryName);
+
+        $.ajax({
+            url: '/api/speciality/register',
+            method: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function () {
+                getName.val('');
+                basePrice.val('');
+                description.val('');
+                categoryName.val('');
+            },
+            error: function (i) {
+                alert("Error: " + i.responseText);
+            }
+        });
+    });
+
+    var mvp = document.getElementById('wz-viewport');
+    if (screen.width < 1170 && screen.width > 768) {
+        mvp.setAttribute('content', 'width=769, user-scalable=0');
+    } else if (screen.width < 768) {
+        mvp.setAttribute('content', 'width=468, user-scalable=0');
+    }
+</script>
 </body>
 </html>

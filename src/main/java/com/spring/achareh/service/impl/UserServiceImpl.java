@@ -8,6 +8,10 @@ import com.spring.achareh.repository.UserRepository;
 import com.spring.achareh.service.UserService;
 import com.spring.achareh.service.base.BaseServiceImpl;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -53,9 +57,12 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserReposito
     }
 
     @Override
-    public List<User> gridSearch(Integer id, String email, String firstName, String lastName, Role role) {
+    public Page<User> gridSearch(Integer id, String email, String firstName, String lastName, Role role, Integer pageNo,
+                                 Integer pageSize, String sortingField, String sortDirection) {
         Specification<User> specification = userGridSearch.gridSearch(id, email, firstName, lastName, role);
-        return repository.findAll(specification);
+        Sort sort = Sort.by(Sort.Direction.valueOf(sortDirection),sortingField);
+        Pageable paging = PageRequest.of(pageNo,pageSize, sort);
+        return repository.findAll(specification,paging);
     }
 
     @Override
