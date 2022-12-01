@@ -3,6 +3,7 @@ package com.spring.achareh.controller;
 import com.spring.achareh.exceptionHandler.customException.AccessDeniedException;
 import com.spring.achareh.model.Expert;
 import com.spring.achareh.model.User;
+import com.spring.achareh.model.enumration.AccountStatus;
 import com.spring.achareh.service.ExpertService;
 import com.spring.achareh.service.dto.expert.ExpertRegisterDTO;
 import org.modelmapper.ModelMapper;
@@ -32,49 +33,39 @@ public class ExpertController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public void save(@Valid @ModelAttribute ExpertRegisterDTO expertDTO) throws IOException {
+    public void register(@ModelAttribute ExpertRegisterDTO expertDTO) throws IOException {
         Expert expert = modelMapper.map(expertDTO, Expert.class);
         expert.setImage(expertDTO.getImage().getBytes());
         expert.setPassword(passwordEncoder.encode(expert.getPassword()));
         expertService.save(expert);
     }
 
-    @PostMapping("/select-speciality")
+    @PostMapping("/selectSpeciality")
     @ResponseStatus(HttpStatus.OK)
-    public void addExpertToSpeciality(Integer specialityId, HttpServletRequest request) {
-        User user = null;
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
-        expertService.addExpertToSpeciality(user.getId(), specialityId);
+    public void addExpertToSpeciality(@RequestParam Integer expertId, @RequestParam Integer specialityId) {
+        expertService.addExpertToSpeciality(expertId, specialityId);
     }
 
-    @PostMapping("/remove-speciality")
+    @PostMapping("/removeSpeciality")
     public ResponseEntity<Expert> removeExpertFromSpeciality(Integer expertId, Integer specialityId) {
         expertService.removeExpertFromSpeciality(expertId, specialityId);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/account-balance")
+    @GetMapping("/accountBalance")
     @ResponseStatus(HttpStatus.OK)
-    public int accountBalance(HttpServletRequest request) {
-        User user = null;
-        if (request.getCookies() == null)
-            throw new AccessDeniedException();
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
-        Expert expert = expertService.findById(user.getId()).get();
+    public int accountBalance(@RequestParam Integer userId) {
+        Expert expert = expertService.findById(userId).get();
         return expert.getBalance();
+    }
+
+    @PostMapping("/changeStatus")
+    public void changeStatus(@RequestParam Integer userId, @RequestParam String status) {
+        AccountStatus accountStatus;
+        if (AccountStatus.active.name().toLowerCase().equals(status))
+            accountStatus = AccountStatus.active;
+        else
+            accountStatus = AccountStatus.inActive;
+        expertService.changeStatus(userId,accountStatus);
     }
 }

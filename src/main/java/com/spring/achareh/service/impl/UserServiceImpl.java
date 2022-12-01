@@ -2,6 +2,7 @@ package com.spring.achareh.service.impl;
 
 import com.spring.achareh.exceptionHandler.customException.OldPasswordIsIncorrectException;
 import com.spring.achareh.model.User;
+import com.spring.achareh.model.enumration.AccountStatus;
 import com.spring.achareh.model.enumration.Role;
 import com.spring.achareh.util.UserGridSearch;
 import com.spring.achareh.repository.UserRepository;
@@ -23,13 +24,11 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
-import java.util.List;
 
 
 @Transactional
 @Service
-public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserRepository>
-        implements UserService {
+public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserRepository> implements UserService {
     private final UserGridSearch userGridSearch;
     private final PasswordEncoder passwordEncoder;
     private final JavaMailSender mailSender;
@@ -50,9 +49,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserReposito
     @Override
     public void changePassword(Integer userId, String oldPassword, String newPassword) {
         User user = repository.findById(userId).get();
-        if (!user.getPassword().equals(oldPassword))
+        if (!(passwordEncoder.matches(oldPassword,user.getPassword())))
             throw new OldPasswordIsIncorrectException();
-        user.setPassword(newPassword);
+        user.setPassword(passwordEncoder.encode(newPassword));
         repository.save(user);
     }
 
@@ -60,9 +59,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, Integer, UserReposito
     public Page<User> gridSearch(Integer id, String email, String firstName, String lastName, Role role, Integer pageNo,
                                  Integer pageSize, String sortingField, String sortDirection) {
         Specification<User> specification = userGridSearch.gridSearch(id, email, firstName, lastName, role);
-        Sort sort = Sort.by(Sort.Direction.valueOf(sortDirection),sortingField);
-        Pageable paging = PageRequest.of(pageNo,pageSize, sort);
-        return repository.findAll(specification,paging);
+        Sort sort = Sort.by(Sort.Direction.valueOf(sortDirection), sortingField);
+        Pageable paging = PageRequest.of(pageNo, pageSize, sort);
+        return repository.findAll(specification, paging);
     }
 
     @Override

@@ -56,20 +56,3 @@ public class AcharehApplication {
 
 }
 
-
-@Component
-class Start implements ApplicationRunner {
-
-    private final UserService userService;
-
-    public Start(UserService userService) {
-        this.userService = userService;
-    }
-
-    @Override
-    public void run(ApplicationArguments args) throws MessagingException, UnsupportedEncodingException {
-        User user = userService.findById(1).get();
-        userService.generateOneTimePassword(user);
-    }
-}
-

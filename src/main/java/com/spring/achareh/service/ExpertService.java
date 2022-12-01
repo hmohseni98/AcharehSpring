@@ -15,10 +15,11 @@ public interface ExpertService extends BaseService<Expert, Integer> {
 
     Expert findExpertBySpecialityId(Integer expertId, Integer specialityId);
 
-    Expert findExpertByEmail (String email);
+    Expert findExpertByEmail(String email);
 
     void addExpertToSpeciality(Integer expertId, Integer specialityId);
 
     void removeExpertFromSpeciality(Integer expertId, Integer specialityId);
 
+    void changeStatus(Integer userId, AccountStatus accountStatus);
 }

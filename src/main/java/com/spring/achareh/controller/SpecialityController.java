@@ -35,15 +35,15 @@ public class SpecialityController {
         modelMapper.addMappings(map);
     }
 
+    @PostMapping("/register")
+    @ResponseStatus(HttpStatus.OK)
+    public void save(@RequestBody SpecialityDTO specialityDTO) {
+        Speciality speciality = modelMapper.map(specialityDTO, Speciality.class);
+        specialityService.save(speciality);
+    }
+
     @GetMapping("/findAll")
     public List<SpecialityDTO> findAll() {
         return specialityService.selectAll();
-    }
-
-    @PostMapping("/register")
-    @ResponseStatus(HttpStatus.OK)
-    public void save(SpecialityDTO specialityDTO) {
-        Speciality speciality = modelMapper.map(specialityDTO,Speciality.class);
-        specialityService.save(speciality);
     }
 }

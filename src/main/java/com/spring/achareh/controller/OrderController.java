@@ -47,43 +47,21 @@ public class OrderController {
         orderService.orderRegister(order);
     }
 
-    @GetMapping("/find-all")
+    @GetMapping("/findAll")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderExpertDTO> findAll() {
-        return orderService.selectAllByStatus();
+    public List<Order> findAll() {
+        return orderService.findAll();
     }
 
-    @GetMapping("/find-all-by-expert")
+    @GetMapping("/findAllByExpert")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderExpertDTO> findAllByExpert(HttpServletRequest request) {
-        User user = null;
-        if (request.getCookies() == null)
-            throw new AccessDeniedException();
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
-        return orderService.selectAllByExpert(user.getId());
+    public List<OrderExpertDTO> findAllByExpert(@RequestParam Integer userId) {
+        return orderService.selectAllByExpert(userId);
     }
 
-    @GetMapping("/find-all-by-customer")
+    @GetMapping("/findAllByCustomer")
     @ResponseStatus(HttpStatus.OK)
-    public List<OrderCustomerDTO> selectAllByCustomer(HttpServletRequest request){
-        User user = null;
-        if (request.getCookies() == null)
-            throw new AccessDeniedException();
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
-        return orderService.selectAllByCustomer(user.getId());
+    public List<OrderCustomerDTO> findAllByCustomer(@RequestParam Integer userId){
+        return orderService.selectAllByCustomer(userId);
     }
 }

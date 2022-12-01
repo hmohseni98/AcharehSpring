@@ -31,27 +31,16 @@ public class CustomerController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public void save(@Valid @ModelAttribute CustomerRegisterDTO customerDTO) {
+    public void register(@Valid @RequestBody CustomerRegisterDTO customerDTO) {
         Customer customer = modelMapper.map(customerDTO, Customer.class);
         customer.setPassword(passwordEncoder.encode(customer.getPassword()));
         customerService.save(customer);
     }
 
-    @GetMapping("/account-balance")
+    @GetMapping("/accountBalance")
     @ResponseStatus(HttpStatus.OK)
-    public int accountBalance(HttpServletRequest request) {
-        User user = null;
-        if (request.getCookies() == null)
-            throw new AccessDeniedException();
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
-        Customer customer = customerService.findById(user.getId()).get();
+    public int accountBalance(@RequestParam Integer userId) {
+        Customer customer = customerService.findById(userId).get();
         return customer.getBalance();
     }
 }

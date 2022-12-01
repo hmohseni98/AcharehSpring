@@ -47,52 +47,36 @@ public class OfferController {
 
     @PostMapping("/register")
     @ResponseStatus(HttpStatus.OK)
-    public void offerRegister(OfferRegisterDTO offerDTO, HttpServletRequest request) {
+    public void offerRegister(@RequestBody OfferRegisterDTO offerDTO) {
         Offer offer = modelMapper.map(offerDTO, Offer.class);
-        User user = null;
-        if (request.getCookies() == null)
-            throw new AccessDeniedException();
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
         Expert expert = new Expert();
-        expert.setId(user.getId());
+        expert.setId(offer.getExpert().getId());
         offer.setStartWorkTime(LocalTime.parse(offerDTO.getStartWorkTime()));
         offer.setExpert(expert);
         offerService.offerRegister(offer);
     }
 
-    @PostMapping("/select-offer-by-customer")
-    public ResponseEntity<Offer> selectOfferByCustomer(Integer offerId, Integer orderId) {
+    @GetMapping("/findAllOfferByCustomer")
+    public ResponseEntity<Offer> findOfferByCustomer(@RequestParam Integer offerId, @RequestParam Integer orderId) {
         offerService.selectOfferByCustomer(offerId, orderId);
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/find-all-offer-by-order-id")
+    @GetMapping("/findAllOfferByOrder")
     @ResponseStatus(HttpStatus.OK)
-    public List<OfferDTO> findAllOfferByOrderId(Integer orderId, boolean sortByPrice, boolean sortByScore) {
+    public List<OfferDTO> findAllOfferByOrderId(@RequestParam Integer orderId, @RequestParam boolean sortByPrice, @RequestParam boolean sortByScore) {
         return offerService.findAllOfferByOrderId(orderId, sortByPrice, sortByScore);
     }
 
-    @GetMapping("/find-all-offer-by-expert-id")
+    @GetMapping("/findAllOfferByExpert")
     @ResponseStatus(HttpStatus.OK)
-    public List<OfferDTO> findAllOfferByExpertId(HttpServletRequest request) {
-        User user = null;
-        if (request.getCookies() == null)
-            throw new AccessDeniedException();
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals("sec_data")) {
-                user = UserController.userMap.get(cookie.getValue());
-                break;
-            }
-        }
-        if (user == null)
-            throw new AccessDeniedException();
-        return offerService.findAllOfferByExpertId(user.getId());
+    public List<OfferDTO> findAllOfferByExpertId(@RequestParam Integer userId) {
+        return offerService.findAllOfferByExpertId(userId);
+    }
+
+    @PostMapping("/selectOfferByCustomer")
+    @ResponseStatus(HttpStatus.OK)
+    public void selectOfferByCustomer(@RequestParam Integer offerId, @RequestParam Integer orderId) {
+        offerService.selectOfferByCustomer(offerId, orderId);
     }
 }

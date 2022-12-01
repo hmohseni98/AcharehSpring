@@ -241,7 +241,7 @@
                 formData.append('image', $('input[type=file]')[0].files[0]);
 
                 $.ajax({
-                    url: 'api/expert/register',
+                    url: '../api/expert/register',
                     method: 'POST',
                     data: formData,
                     contentType: false,
@@ -252,8 +252,8 @@
                     error: function (i) {
                         $("#errorText").html(i.responseText);
                     }
-                });
-            });
+        });
+        });
         })
         var mvp = document.getElementById('wz-viewport');
         if (screen.width < 1170 && screen.width > 768) {
@@ -366,9 +366,7 @@
                                                 <input
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
                                                         id='wze100-wz-input' name='wze100-wz-input' type='text'
-                                                        placeholder='نام' value='' required wz-validate='required'
-                                                        wz-validate-required='پر کردن این بخش الزامی است.'
-                                                        wz-validate-message='ورودی نامعتبر است.'/>
+                                                        placeholder='نام' value='' required wz-validate='required'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
@@ -383,9 +381,7 @@
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
                                                         id='wze101-wz-input' name='wze101-wz-input' type='text'
                                                         placeholder='نام خانوادگی' value='' required
-                                                        wz-validate='required'
-                                                        wz-validate-required='پر کردن این بخش الزامی است.'
-                                                        wz-validate-message='ورودی نامعتبر است.'/>
+                                                        wz-validate='required'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
@@ -400,9 +396,7 @@
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
                                                         id='wze102-wz-input' name='wze102-wz-input' type='text'
                                                         placeholder='پست الكترونيك' value='' required
-                                                        wz-validate='email'
-                                                        wz-validate-required='پر کردن این بخش الزامی است.'
-                                                        wz-validate-message='ورودی نامعتبر است.'/>
+                                                        wz-validate='email'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
@@ -417,9 +411,7 @@
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
                                                         id='psw' name='wze103-wz-input' type='password'
                                                         placeholder='رمز عبور' value='' required
-                                                        wz-validate='password,required'
-                                                        wz-validate-required='پر کردن این بخش الزامی است.'
-                                                        wz-validate-message='ورودی نامعتبر است.'/>
+                                                        wz-validate='password,required'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>
@@ -439,9 +431,7 @@
                                                         class='wzc54-container-input wz-form-inputText wz-form-field'
                                                         id='psw-confirm' name='wze106-wz-input' type='password'
                                                         placeholder='تکرار رمز عبور' value='' required
-                                                        wz-validate='password,required'
-                                                        wz-validate-required='پر کردن این بخش الزامی است.'
-                                                        wz-validate-message='ورودی نامعتبر است.'/>
+                                                        wz-validate='password,required'/>
                                                 <p class='wzc54-container-message wz-form-inputText-message'></p></div>
                                         </div>
                                     </div>

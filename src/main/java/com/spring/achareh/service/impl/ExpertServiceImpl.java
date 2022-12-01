@@ -90,4 +90,11 @@ public class ExpertServiceImpl extends BaseServiceImpl<Expert, Integer, ExpertRe
         expert.setSpecialities(newSet);
         repository.save(expert);
     }
+
+    @Override
+    public void changeStatus(Integer userId, AccountStatus accountStatus){
+        Expert expert = repository.findById(userId).get();
+        expert.setStatus(accountStatus);
+        repository.save(expert);
+    }
 }
